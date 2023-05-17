@@ -7,4 +7,6 @@ target 'Sports App' do
   # Pods for Sports App
 pod 'Kingfisher', '~> 7.0'
 pod 'Alamofire'
+pod 'ReachabilitySwift'
+pod 'lottie-ios'
 end
