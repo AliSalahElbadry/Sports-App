@@ -10,16 +10,16 @@ import Foundation
 
 // MARK: - Welcome
 struct TennisLeaguesWelcome: Codable {
-    let success: Int
-    let result: [TennisLeaguesResult]
+     var success: Int?
+     var result: [TennisLeaguesResult]?
 }
 
 // MARK: - Result
 struct TennisLeaguesResult: Codable {
-    let leagueKey: Int
-    let leagueName: String
-    let countryKey: Int
-    let countryName: LeaguesCountryName
+     var leagueKey: Int?
+     var leagueName: String?
+     var countryKey: Int?
+     var countryName: LeaguesCountryName?
 
     enum CodingKeys: String, CodingKey {
         case leagueKey = "league_key"

@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct URLs{
+class URLs{
     
     //team details
       func teamDetailsFoot(teamKey:String)->String
