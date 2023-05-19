@@ -8,7 +8,7 @@ import Foundation
 import Alamofire
 protocol PTennisNetworkManager{
     func fetchLeagues(complition:@escaping (TennisLeaguesWelcome?) -> Void)
-    func fetchEvents(leagueId:String, complition:@escaping (TennisEvents.Welcome?) -> Void)
+    func fetchEvents(mode:Int,leagueId:String, complition:@escaping (TennisEvents.Welcome?) -> Void)
     func fetchPlayerDetails(playerId:String, complition:@escaping (TennisPlayerDetails.Welcome?) -> Void)
 }
 class TennisNetworkManager : PTennisNetworkManager{
@@ -36,8 +36,16 @@ class TennisNetworkManager : PTennisNetworkManager{
         }
     }
     
-    func fetchEvents(leagueId: String, complition:@escaping (TennisEvents.Welcome?) -> Void) {
-        AF.request(urls.TennisUpcomingEvents(leagueKey: leagueId)).response
+    func fetchEvents(mode:Int,leagueId: String, complition:@escaping (TennisEvents.Welcome?) -> Void) {
+        var url:String?
+        if (mode == 0 ){
+            url =  urls.TennisUpcomingEvents(leagueKey: leagueId)
+            
+        }else  {
+            url = urls.TennisLatestEvents(leagueKey: leagueId)
+            
+        }
+        AF.request(url ?? "").response
         { response in
             if let data = response.data {
                 do{

@@ -7,14 +7,25 @@
 
 import UIKit
 
-class TeamDetailsViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+protocol PTeamDetailsViewController{
+    func refrishTeamDetails()
+}
+class TeamDetailsViewController: UIViewController,PTeamDetailsViewController {
+   
+    var league:League?
+    var team:Team?
+    var viewModel:TeamDetailsViewModel?
+    func refrishTeamDetails() {
+        <#code#>
     }
     
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel = TeamDetailsViewModelDependancyFactory.viewModel(sportName: league?.sport ?? "", pTeamDetailsViewController: self, teamId: String(team?.teamKey ?? 0))
+        viewModel?.fetchTeam()
+    }
 
     /*
     // MARK: - Navigation

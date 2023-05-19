@@ -7,15 +7,21 @@
 
 import UIKit
 
-class LeagueDetailsViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+protocol PLeagueDetailsViewController{
+    func refrishUserInterface()
+}
+class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewController {
+    func refrishUserInterface() {
+        
     }
     
-
+    private var viewModel : LeaugeDetailsViewModel?
+    var league:League?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel = LeagueDetailsDependancyFactory.viewModel(league: self.league!, pleagueDetails: self)
+        viewModel?.prepareLeageDetails()
+    }
     /*
     // MARK: - Navigation
 

@@ -9,8 +9,8 @@ import Foundation
 import Alamofire
 protocol PCricketNetworkManager{
     func fetchLeagues(complition:@escaping (CricketLeaguesWelcome?) -> Void)
-    func fetchEvents(leagueId:String, complition:@escaping (CricketEvents.Welcome?) -> Void)
-    func fetchPlayerDetails(teamId:String, complition:@escaping (CricketTeamDetails.Welcome?) -> Void)
+    func fetchEvents(mode:Int,leagueId:String, complition:@escaping (CricketEvents.Welcome?) -> Void)
+    func fetchTeamDetails(teamId:String, complition:@escaping (CricketTeamDetails.Welcome?) -> Void)
 }
 class CricketNetworkManager : PCricketNetworkManager{
     
@@ -37,8 +37,16 @@ class CricketNetworkManager : PCricketNetworkManager{
         }
     }
     
-    func fetchEvents(leagueId: String, complition:@escaping (CricketEvents.Welcome?) -> Void) {
-        AF.request(urls.CricketUpcomingEvents(leagueKey: leagueId)).response
+    func fetchEvents(mode:Int,leagueId: String, complition:@escaping (CricketEvents.Welcome?) -> Void) {
+        var url:String?
+        if (mode == 0 ){
+            url =  urls.CricketUpcomingEvents(leagueKey: leagueId)
+            
+        }else  {
+            url = urls.CricketLatestEvents(leagueKey: leagueId)
+            
+        }
+        AF.request(url ?? "").response
         { response in
             if let data = response.data {
                 do{
@@ -56,7 +64,7 @@ class CricketNetworkManager : PCricketNetworkManager{
         }
     }
     
-    func fetchPlayerDetails(teamId: String, complition:@escaping (CricketTeamDetails.Welcome?) -> Void)  {
+    func fetchTeamDetails(teamId: String, complition:@escaping (CricketTeamDetails.Welcome?) -> Void)  {
         AF.request(urls.CricketTeamDetails(teamKey: teamId)).response
         { response in
             if let data = response.data {

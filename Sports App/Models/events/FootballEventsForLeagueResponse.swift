@@ -15,34 +15,34 @@ class FootballEvents{
     
     // MARK: - Result
     struct EventsResult: Codable {
-        var eventKey: Int
-        var eventDate: String
-        var eventTime: EventTime
+        var eventKey: Int?
+        var eventDate: String?
+        var eventTime: EventTime?
         var eventHomeTeam: String
-        var homeTeamKey: Int
-        var eventAwayTeam: String
-        var awayTeamKey: Int
-        var eventHalftimeResult: EventHalftimeResult
-        var eventFinalResult, eventFtResult, eventPenaltyResult: String
-        var eventStatus: EventStatus
-        var countryName: CountryName
-        var leagueName: LeagueName
-        var leagueKey: Int
-        var leagueRound: String
-        var leagueSeason: LeagueSeason
-        var eventLive, eventStadium, eventReferee: String
-        var homeTeamLogo, awayTeamLogo: String
-        var eventCountryKey: Int
-        var leagueLogo, countryLogo: String
-        var eventHomeFormation, eventAwayFormation: String
-        var fkStageKey: Int
-        var stageName: StageName
+        var homeTeamKey: Int?
+        var eventAwayTeam: String?
+        var awayTeamKey: Int?
+        var eventHalftimeResult: EventHalftimeResult?
+        var eventFinalResult, eventFtResult, eventPenaltyResult: String?
+        var eventStatus: EventStatus?
+        var countryName: CountryName?
+        var leagueName: LeagueName?
+        var leagueKey: Int?
+        var leagueRound: String?
+        var leagueSeason: LeagueSeason?
+        var eventLive, eventStadium, eventReferee: String?
+        var homeTeamLogo, awayTeamLogo: String?
+        var eventCountryKey: Int?
+        var leagueLogo, countryLogo: String?
+        var eventHomeFormation, eventAwayFormation: String?
+        var fkStageKey: Int?
+        var stageName: StageName?
         var leagueGroup: JSONNull?
-        var goalscorers: [Goalscorer]
-        var substitutes: [Substitute]
-        var cards: [CardElement]
-        var lineups: Lineups
-        var statistics: [Statistic]
+        var goalscorers: [Goalscorer]?
+        var substitutes: [Substitute]?
+        var cards: [CardElement]?
+        var lineups: Lineups?
+        var statistics: [Statistic]?
         
         enum CodingKeys: String, CodingKey {
             case eventKey = "event_key"
@@ -81,13 +81,13 @@ class FootballEvents{
     
     // MARK: - CardElement
     struct CardElement: Codable {
-        var time, homeFault: String
-        var card: CardEnum
-        var awayFault: String
-        var info: Info
-        var homePlayerID: HomePlayerID
-        var awayPlayerID: String
-        var infoTime: InfoTime
+        var time, homeFault: String?
+        var card: CardEnum?
+        var awayFault: String?
+        var info: Info?
+        var homePlayerID: HomePlayerID?
+        var awayPlayerID: String?
+        var infoTime: InfoTime?
         
         enum CodingKeys: String, CodingKey {
             case time
@@ -161,13 +161,13 @@ class FootballEvents{
     
     // MARK: - Goalscorer
     struct Goalscorer: Codable {
-        var time, homeScorer, homeScorerID: String
-        var homeAssist: HomeAssist
-        var homeAssistID, score, awayScorer, awayScorerID: String
-        var awayAssist: AwayAssist
-        var awayAssistID: String
-        var info: Info
-        var infoTime: InfoTime
+        var time, homeScorer, homeScorerID: String?
+        var homeAssist: HomeAssist?
+        var homeAssistID, score, awayScorer, awayScorerID: String?
+        var awayAssist: AwayAssist?
+        var awayAssistID: String?
+        var info: Info?
+        var infoTime: InfoTime?
         
         enum CodingKeys: String, CodingKey {
             case time
@@ -220,7 +220,7 @@ class FootballEvents{
     
     // MARK: - Team
     struct Team: Codable {
-        var startingLineups, substitutes, coaches, missingPlayers: [JSONAny]
+        var startingLineups, substitutes, coaches, missingPlayers: [JSONAny]?
         
         enum CodingKeys: String, CodingKey {
             case startingLineups = "starting_lineups"
@@ -235,8 +235,8 @@ class FootballEvents{
     
     // MARK: - Statistic
     struct Statistic: Codable {
-        var type: TypeEnum
-        var home, away: String
+        var type: TypeEnum?
+        var home, away: String?
     }
     
     enum TypeEnum: String, Codable {
@@ -250,13 +250,13 @@ class FootballEvents{
     
     // MARK: - Substitute
     struct Substitute: Codable {
-        var time: String
-        var homeScorer: AwayScorerUnion
-        var homeAssist: String
-        var score: Score
-        var awayScorer: AwayScorerUnion
-        var awayAssist, info: String
-        var infoTime: InfoTime
+        var time: String?
+        var homeScorer: AwayScorerUnion?
+        var homeAssist: String?
+        var score: Score?
+        var awayScorer: AwayScorerUnion?
+        var awayAssist, info: String?
+        var infoTime: InfoTime?
         
         enum CodingKeys: String, CodingKey {
             case time
