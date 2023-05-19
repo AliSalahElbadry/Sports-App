@@ -8,7 +8,7 @@
 import Foundation
 
 class FavoritesViewModel{
-    var favorites : Array<FavoriteLeagues>?
+    var favorites : Array<League>?
     let dbManager:PDBManager
     let favoritesLeaguesProtocol :FavoritesLeaguesProtocol
     init(dbManager: PDBManager, favoritesLeaguesProtocol:FavoritesLeaguesProtocol) {
@@ -16,7 +16,7 @@ class FavoritesViewModel{
         self.favoritesLeaguesProtocol = favoritesLeaguesProtocol
         favorites = []
     }
-    func saveNewFavorite(league: FavoriteLeagues) {
+    func saveNewFavorite(league: League) {
         favorites?.append(league)
         dbManager.saveNewFavorite(league: league)
         favoritesLeaguesProtocol.showFavorites()
@@ -31,7 +31,7 @@ class FavoritesViewModel{
         self.favorites = []
         let allFav = dbManager.getAllFavoriteLeagues()
         allFav?.forEach({it in
-            let favorite = FavoriteLeagues()
+            let favorite = League()
             favorite.id = it.value(forKey: "id") as? String
             favorite.name = it.value(forKey: "name") as? String
             favorite.image = it.value(forKey: "image") as? String

@@ -16,7 +16,7 @@ class TeamDetailsViewController: UIViewController,PTeamDetailsViewController {
     var team:Team?
     var viewModel:TeamDetailsViewModel?
     func refrishTeamDetails() {
-        <#code#>
+        
     }
     
 
