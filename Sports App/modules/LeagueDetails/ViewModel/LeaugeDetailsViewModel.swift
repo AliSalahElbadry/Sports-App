@@ -8,14 +8,14 @@
 import Foundation
 
 struct Events{
-    var footUpComingEvents:[FootballEvents.EventsResult]?
+    var footUpComingEvents:[FootballEvents.Result]?
     var basketUpcomingEvents:[BasketballEvents.Result]?
     var cricketUpcomingEvents:[CricketEvents.Result]?
     var tennisUpcomingEvents:[TennisEvents.Result]?
     
-    var footLatestEvents:[FootballEvents.EventsResult]?
+    var footLatestEvents:[FootLatestResponse.Result]?
     var basketLatestEvents:[BasketballEvents.Result]?
-    var cricketLatestEvents:[CricketEvents.Result]?
+    var cricketLatestEvents:[CricketLatestResponse.Result]?
     var tennisLatestEvents:[TennisEvents.Result]?
 }
 struct Team:Hashable{
@@ -47,30 +47,31 @@ class LeaugeDetailsViewModel{
     }
     
     func prepareLeageDetails(){
-     fetchUpcomingEvents()
+       fetchUpcomingEvents()
     }
     private func fetchUpcomingEvents(){
         if(league.sport == "football"){
             events?.footUpComingEvents = []
-            footNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
+            footNetworkManager?.fetchEvents( leagueId: league.id!, complition: { it in
                 self.events?.footUpComingEvents = it?.result
+                
                 self.fetchLatestEvents()
             })
         }else if( league.sport == "basketball"){
             events?.basketUpcomingEvents = []
-            basketNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
+            basketNetworkManager?.fetchEvents( leagueId: league.id!, complition: { it in
                 self.events?.basketUpcomingEvents = it?.result
                 self.fetchLatestEvents()
             })
         }else if(league.sport == "cricket"){
             events?.cricketUpcomingEvents = []
-            cricketNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
+            cricketNetworkManager?.fetchEvents(leagueId: league.id!, complition: { it in
                 self.events?.cricketUpcomingEvents = it?.result
                 self.fetchLatestEvents()
             })
         }else if (league.sport == "tennis"){
             events?.tennisUpcomingEvents = []
-            tennisNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
+            tennisNetworkManager?.fetchEvents( leagueId: league.id!, complition: { it in
                 self.events?.tennisUpcomingEvents = it?.result
                 self.fetchLatestEvents()
             })
@@ -79,26 +80,25 @@ class LeaugeDetailsViewModel{
     private func fetchLatestEvents(){
         if(league.sport == "football"){
             events?.footLatestEvents = []
-            footNetworkManager?.fetchEvents(mode: 1, leagueId: league.id!, complition: { it in
+            footNetworkManager?.fetchLatestEvents( leagueId: league.id!, complition: { it in
                 self.events?.footLatestEvents = it?.result
-                
                 self.prepareTeams()
             })
         }else if( league.sport == "basketball"){
             events?.basketLatestEvents = []
-            basketNetworkManager?.fetchEvents(mode: 1, leagueId: league.id!, complition: { it in
+            basketNetworkManager?.fetchLatestEvents(leagueId: league.id!, complition: { it in
                 self.events?.basketLatestEvents = it?.result
                 self.prepareTeams()
             })
         }else if(league.sport == "cricket"){
             events?.cricketLatestEvents = []
-            cricketNetworkManager?.fetchEvents(mode: 1, leagueId: league.id!, complition: { it in
+            cricketNetworkManager?.fetchLatestEvents(leagueId: league.id!, complition: { it in
                 self.events?.cricketLatestEvents = it?.result
                 self.prepareTeams()
             })
         }else if (league.sport == "tennis"){
             events?.tennisLatestEvents = []
-            tennisNetworkManager?.fetchEvents(mode: 1, leagueId: league.id!, complition: { it in
+            tennisNetworkManager?.fetchLatestEvents(leagueId: league.id!, complition: { it in
                 self.events?.tennisLatestEvents = it?.result
                 self.prepareTeams()
             })

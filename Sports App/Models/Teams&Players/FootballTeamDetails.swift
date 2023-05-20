@@ -32,7 +32,7 @@ class FootballTeamDetails{
     // MARK: - Coach
     struct Coach: Codable {
         var coachName: String?
-        var coachCountry, coachAge: JSONNull?
+        var coachCountry, coachAge: String?
 
         enum CodingKeys: String, CodingKey {
             case coachName = "coach_name"
@@ -45,11 +45,11 @@ class FootballTeamDetails{
     struct Player: Codable {
         var playerKey: Int?
         var playerName, playerNumber: String?
-        var playerCountry: JSONNull?
+        var playerCountry: String?
         var playerType: PlayerType?
         var playerAge, playerMatchPlayed, playerGoals, playerYellowCards: String?
         var playerRedCards: String?
-        var playerImage: JSONNull?
+        var playerImage: String?
 
         enum CodingKeys: String, CodingKey {
             case playerKey = "player_key"
@@ -73,30 +73,5 @@ class FootballTeamDetails{
         case midfielders = "Midfielders"
     }
 
-    // MARK: - Encode/decode helpers
-
-    class JSONNull: Codable, Hashable {
-
-        public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-            return true
-        }
-
-        public var hashValue: Int {
-            return 0
-        }
-
-        public init() {}
-
-        public required init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            if !container.decodeNil() {
-                throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-            }
-        }
-
-        public func encode(to encoder: Encoder) throws {
-            var container = encoder.singleValueContainer()
-            try container.encodeNil()
-        }
-    }
+ 
 }

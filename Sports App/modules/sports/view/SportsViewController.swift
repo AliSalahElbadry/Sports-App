@@ -16,10 +16,10 @@ class SportsViewController: UIViewController,UICollectionViewDelegate,UICollecti
         colView.delegate=self
         colView.dataSource=self
         self.title = "Sports"
-        sportsArr.append(Sports(sportName: "FootBall", sportPhoto: UIImage(named: "football")!))
+        sportsArr.append(Sports(sportName: "FootBall", sportPhoto: UIImage(named: "FootballPlayer")!))
         sportsArr.append(Sports(sportName: "BasketBall", sportPhoto: UIImage(named: "NewBasketball")!))
         sportsArr.append(Sports(sportName: "Cricket", sportPhoto: UIImage(named: "NewCricket")!))
-        sportsArr.append(Sports(sportName: "Tennis", sportPhoto: UIImage(named: "tennis")!))
+        sportsArr.append(Sports(sportName: "Tennis", sportPhoto: UIImage(named: "TennisPlayer")!))
         
     }
     
@@ -53,9 +53,9 @@ class SportsViewController: UIViewController,UICollectionViewDelegate,UICollecti
     
     
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let leaugesPage = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesTableViewController") as! LeaugesTableViewController
+        let leaugesPage = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesViewController") as! LeaugesViewController
         leaugesPage.modalTransitionStyle = .crossDissolve
-        leaugesPage.modalPresentationStyle = .fullScreen
+         leaugesPage.modalPresentationStyle = .fullScreen
         switch (indexPath.row){
         case 0 :
             leaugesPage.sportName="football"

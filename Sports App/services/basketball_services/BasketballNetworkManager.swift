@@ -9,8 +9,9 @@ import Foundation
 import Alamofire
 protocol PBasketballNetworkManager{
     func fetchLeagues(complition:@escaping (BasketLeaguesWelcome?) -> Void)
-    func fetchEvents(mode:Int,leagueId:String, complition:@escaping (BasketballEvents.Welcome?) -> Void)
+    func fetchEvents(leagueId:String, complition:@escaping (BasketballEvents.Welcome?) -> Void)
     func fetchTeamDetails(teamId:String, complition:@escaping (BasketballTeamDetails.Welcome?) -> Void)
+    func fetchLatestEvents(leagueId: String, complition:@escaping (BasketballEvents.Welcome?) -> Void)
 }
 class BasketballNetworkManager : PBasketballNetworkManager{
     
@@ -37,16 +38,10 @@ class BasketballNetworkManager : PBasketballNetworkManager{
         }
     }
     
-    func fetchEvents(mode:Int,leagueId: String, complition:@escaping (BasketballEvents.Welcome?) -> Void) {
-        var url:String?
-        if (mode == 0 ){
-            url =  urls.BasketballUpcomingEvents(leagueKey: leagueId)
+    func fetchEvents(leagueId: String, complition:@escaping (BasketballEvents.Welcome?) -> Void) {
+        let url  =  urls.BasketballUpcomingEvents(leagueKey: leagueId)
             
-        }else  {
-            url = urls.BasketballLatestEvents(leagueKey: leagueId)
-            
-        }
-        AF.request(url ?? "").response
+        AF.request(url ).response
         { response in
             if let data = response.data {
                 do{
@@ -63,7 +58,27 @@ class BasketballNetworkManager : PBasketballNetworkManager{
             }
         }
     }
-    
+    func fetchLatestEvents(leagueId: String, complition:@escaping (BasketballEvents.Welcome?) -> Void) {
+        let url = urls.BasketballLatestEvents(leagueKey: leagueId)
+            
+        
+        AF.request(url).response
+        { response in
+            if let data = response.data {
+                do{
+                    let result = try JSONDecoder().decode(BasketballEvents.Welcome.self, from: data)
+                    DispatchQueue.main.async {
+                        complition(result)
+                    }
+                }
+                catch{
+                    complition(nil)
+                }
+            } else {
+                complition(nil)
+            }
+        }
+    }
     func fetchTeamDetails(teamId: String, complition:@escaping (BasketballTeamDetails.Welcome?) -> Void)  {
         AF.request(urls.BasketballTeamDetails(teamKey: teamId)).response
         { response in

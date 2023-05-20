@@ -1,12 +1,12 @@
 //
-//  FootballEventsResponse.swift
+//  FootLatestResponse.swift
 //  Sports App
 //
-//  Created by Mac on 18/05/2023.
+//  Created by Mac on 20/05/2023.
 //
 
-class FootballEvents{
-    
+import Foundation
+class FootLatestResponse{
     class Welcome: Codable {
         var success: Int?
         var result: [Result]?
@@ -26,8 +26,9 @@ class FootballEvents{
         var homeTeamKey: Int?
         var eventAwayTeam: String?
         var awayTeamKey: Int?
-        var eventHalftimeResult: EventHalftimeResult?
-        var eventFinalResult, eventFtResult, eventPenaltyResult, eventStatus: String?
+        var eventHalftimeResult, eventFinalResult, eventFtResult: EventFinalResult?
+        var eventPenaltyResult: String?
+        var eventStatus: EventStatus?
         var countryName: CountryName?
         var leagueName: LeagueName?
         var leagueKey: Int?
@@ -81,7 +82,7 @@ class FootballEvents{
             case goalscorers, substitutes, cards, lineups, statistics
         }
 
-        init(eventKey: Int?, eventDate: String?, eventTime: EventTime?, eventHomeTeam: String?, homeTeamKey: Int?, eventAwayTeam: String?, awayTeamKey: Int?, eventHalftimeResult: EventHalftimeResult?, eventFinalResult: String?, eventFtResult: String?, eventPenaltyResult: String?, eventStatus: String?, countryName: CountryName?, leagueName: LeagueName?, leagueKey: Int?, leagueRound: String?, leagueSeason: LeagueSeason?, eventLive: String?, eventStadium: String?, eventReferee: String?, homeTeamLogo: String?, awayTeamLogo: String?, eventCountryKey: Int?, leagueLogo: String?, countryLogo: String?, eventHomeFormation: String?, eventAwayFormation: String?, fkStageKey: Int?, stageName: StageName?, leagueGroup: JSONNull?, goalscorers: [Goalscorer]?, substitutes: [Substitute]?, cards: [CardElement]?, lineups: Lineups?, statistics: [Statistic]?) {
+        init(eventKey: Int?, eventDate: String?, eventTime: EventTime?, eventHomeTeam: String?, homeTeamKey: Int?, eventAwayTeam: String?, awayTeamKey: Int?, eventHalftimeResult: EventFinalResult?, eventFinalResult: EventFinalResult?, eventFtResult: EventFinalResult?, eventPenaltyResult: String?, eventStatus: EventStatus?, countryName: CountryName?, leagueName: LeagueName?, leagueKey: Int?, leagueRound: String?, leagueSeason: LeagueSeason?, eventLive: String?, eventStadium: String?, eventReferee: String?, homeTeamLogo: String?, awayTeamLogo: String?, eventCountryKey: Int?, leagueLogo: String?, countryLogo: String?, eventHomeFormation: String?, eventAwayFormation: String?, fkStageKey: Int?, stageName: StageName?, leagueGroup: JSONNull?, goalscorers: [Goalscorer]?, substitutes: [Substitute]?, cards: [CardElement]?, lineups: Lineups?, statistics: [Statistic]?) {
             self.eventKey = eventKey
             self.eventDate = eventDate
             self.eventTime = eventTime
@@ -126,8 +127,7 @@ class FootballEvents{
         var card: CardEnum?
         var awayFault: String?
         var info: Info?
-        var homePlayerID: HomePlayerID?
-        var awayPlayerID: String?
+        var homePlayerID, awayPlayerID: String?
         var infoTime: InfoTime?
 
         enum CodingKeys: String, CodingKey {
@@ -141,7 +141,7 @@ class FootballEvents{
             case infoTime = "info_time"
         }
 
-        init(time: String?, homeFault: String?, card: CardEnum?, awayFault: String?, info: Info?, homePlayerID: HomePlayerID?, awayPlayerID: String?, infoTime: InfoTime?) {
+        init(time: String?, homeFault: String?, card: CardEnum?, awayFault: String?, info: Info?, homePlayerID: String?, awayPlayerID: String?, infoTime: InfoTime?) {
             self.time = time
             self.homeFault = homeFault
             self.card = card
@@ -156,12 +156,6 @@ class FootballEvents{
     enum CardEnum: String, Codable {
         case redCard = "red card"
         case yellowCard = "yellow card"
-    }
-
-    enum HomePlayerID: String, Codable {
-        case empty = ""
-        case the3215501330 = "3215501330"
-        case the3543847450 = "3543847450"
     }
 
     enum Info: String, Codable {
@@ -180,39 +174,53 @@ class FootballEvents{
         case ghana = "Ghana"
     }
 
-    enum EventHalftimeResult: String, Codable {
-        case empty = ""
+    enum EventFinalResult: String, Codable {
         case the00 = "0 - 0"
         case the01 = "0 - 1"
         case the02 = "0 - 2"
+        case the03 = "0 - 3"
         case the10 = "1 - 0"
         case the11 = "1 - 1"
         case the12 = "1 - 2"
+        case the13 = "1 - 3"
+        case the14 = "1 - 4"
         case the20 = "2 - 0"
         case the21 = "2 - 1"
+        case the22 = "2 - 2"
+        case the23 = "2 - 3"
         case the30 = "3 - 0"
+        case the31 = "3 - 1"
         case the32 = "3 - 2"
+        case the33 = "3 - 3"
+        case the34 = "3 - 4"
         case the40 = "4 - 0"
+        case the41 = "4 - 1"
+        case the42 = "4 - 2"
+        case the50 = "5 - 0"
+        case the51 = "5 - 1"
+        case the52 = "5 - 2"
+        case the60 = "6 - 0"
+    }
+
+    enum EventStatus: String, Codable {
+        case finished = "Finished"
     }
 
     enum EventTime: String, Codable {
-        case the1200 = "12:00"
+        case the1100 = "11:00"
         case the1600 = "16:00"
         case the1700 = "17:00"
         case the1900 = "19:00"
-        case the1945 = "19:45"
+        case the1930 = "19:30"
         case the2000 = "20:00"
-        case the2045 = "20:45"
-        case the2100 = "21:00"
     }
 
     // MARK: - Goalscorer
     class Goalscorer: Codable {
-        var time, homeScorer, homeScorerID: String?
-        var homeAssist: HomeAssist?
-        var homeAssistID, score, awayScorer, awayScorerID: String?
-        var awayAssist: AwayAssist?
-        var awayAssistID: String?
+        var time, homeScorer, homeScorerID, homeAssist: String?
+        var homeAssistID: String?
+        var score: EventFinalResult?
+        var awayScorer, awayScorerID, awayAssist, awayAssistID: String?
         var info: Info?
         var infoTime: InfoTime?
 
@@ -231,7 +239,7 @@ class FootballEvents{
             case infoTime = "info_time"
         }
 
-        init(time: String?, homeScorer: String?, homeScorerID: String?, homeAssist: HomeAssist?, homeAssistID: String?, score: String?, awayScorer: String?, awayScorerID: String?, awayAssist: AwayAssist?, awayAssistID: String?, info: Info?, infoTime: InfoTime?) {
+        init(time: String?, homeScorer: String?, homeScorerID: String?, homeAssist: String?, homeAssistID: String?, score: EventFinalResult?, awayScorer: String?, awayScorerID: String?, awayAssist: String?, awayAssistID: String?, info: Info?, infoTime: InfoTime?) {
             self.time = time
             self.homeScorer = homeScorer
             self.homeScorerID = homeScorerID
@@ -247,26 +255,12 @@ class FootballEvents{
         }
     }
 
-    enum AwayAssist: String, Codable {
-        case empty = ""
-        case iSalifu = "I. Salifu"
-        case jMereku = "J. Mereku"
-    }
-
-    enum HomeAssist: String, Codable {
-        case cGyamfi = "C. Gyamfi"
-        case eAppau = "E. Appau"
-        case empty = ""
-        case mArthur = "M. Arthur"
-        case mOmgba = "M. Omgba"
-        case sMukwala = "S. Mukwala"
-    }
-
     enum LeagueName: String, Codable {
         case premierLeague = "Premier League"
     }
 
     enum LeagueSeason: String, Codable {
+        case the20212022 = "2021/2022"
         case the20222023 = "2022/2023"
     }
 
@@ -321,6 +315,8 @@ class FootballEvents{
 
     enum TypeEnum: String, Codable {
         case attacks = "Attacks"
+        case ballPossession = "Ball Possession"
+        case corners = "Corners"
         case dangerousAttacks = "Dangerous Attacks"
         case offTarget = "Off Target"
         case onTarget = "On Target"

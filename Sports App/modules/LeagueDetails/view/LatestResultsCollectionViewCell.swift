@@ -16,5 +16,7 @@ class LatestResultsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventTimeLabel: UILabel!
     @IBOutlet weak var eventFinalResultLabel: UILabel!
+    
 }
+
 

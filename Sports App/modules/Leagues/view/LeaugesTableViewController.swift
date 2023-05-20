@@ -10,7 +10,8 @@ import Kingfisher
 protocol LeaguesTableProtocol{
     func showLeagues()
 }
-class LeaugesTableViewController: UITableViewController, LeaguesTableProtocol {
+class LeaugesViewController: UIViewController, LeaguesTableProtocol , UITableViewDelegate, UITableViewDataSource{
+    @IBOutlet weak var tableView: UITableView!
     var activityIndicator = UIActivityIndicatorView(style: .large)
     var viewModel: LeaguesViewModel?
     var sportName:String?
@@ -21,11 +22,17 @@ class LeaugesTableViewController: UITableViewController, LeaguesTableProtocol {
     }
     
     
+    @IBAction func backIsPressed(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.center = view.center
         activityIndicator.startAnimating()
+        
         view.addSubview(activityIndicator)
         viewModel =  LeaguesDependancyFactory.viewModel(sportName: sportName ?? "football",leagueProtocol: self)
         viewModel?.getLeagues()
@@ -38,23 +45,23 @@ class LeaugesTableViewController: UITableViewController, LeaguesTableProtocol {
         }else{
             self.title = "Tennis leagues"
         }
-         
+       
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return viewModel?.leagues?.count ?? 0
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "leagueCell", for: indexPath) as! LeagueTableViewCell
         cell.contentView.layer.cornerRadius = 20
         cell.contentView.layer.masksToBounds = true
@@ -89,14 +96,17 @@ class LeaugesTableViewController: UITableViewController, LeaguesTableProtocol {
     }
     
 
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let leagueDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
         leagueDetailsPage.league = viewModel?.leagues?[indexPath.row]
         leagueDetailsPage.modalTransitionStyle = .crossDissolve
         leagueDetailsPage.modalPresentationStyle = .fullScreen
         self.present(leagueDetailsPage, animated: true)
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
     }
 }

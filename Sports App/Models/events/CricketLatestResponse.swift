@@ -1,12 +1,12 @@
 //
-//  FootballEventsResponse.swift
+//  CricketLatestResponse.swift
 //  Sports App
 //
-//  Created by Mac on 18/05/2023.
+//  Created by Mac on 20/05/2023.
 //
 
-class FootballEvents{
-    
+import Foundation
+class CricketLatestResponse{
     class Welcome: Codable {
         var success: Int?
         var result: [Result]?
@@ -20,254 +20,257 @@ class FootballEvents{
     // MARK: - Result
     class Result: Codable {
         var eventKey: Int?
-        var eventDate: String?
+        var eventDateStart, eventDateStop: String?
         var eventTime: EventTime?
         var eventHomeTeam: String?
         var homeTeamKey: Int?
         var eventAwayTeam: String?
         var awayTeamKey: Int?
-        var eventHalftimeResult: EventHalftimeResult?
-        var eventFinalResult, eventFtResult, eventPenaltyResult, eventStatus: String?
+        var eventServiceHome: EventServiceHome?
+        var eventServiceAway, eventHomeFinalResult, eventAwayFinalResult: String?
+        var eventHomeRr, eventAwayRr: String?
+        var eventStatus: EventStatus?
+        var eventStatusInfo: String?
         var countryName: CountryName?
         var leagueName: LeagueName?
         var leagueKey: Int?
         var leagueRound: String?
         var leagueSeason: LeagueSeason?
-        var eventLive, eventStadium, eventReferee: String?
-        var homeTeamLogo, awayTeamLogo: String?
-        var eventCountryKey: Int?
-        var leagueLogo, countryLogo: String?
-        var eventHomeFormation, eventAwayFormation: String?
-        var fkStageKey: Int?
-        var stageName: StageName?
-        var leagueGroup: JSONNull?
-        var goalscorers: [Goalscorer]?
-        var substitutes: [Substitute]?
-        var cards: [CardElement]?
+        var eventLive: String?
+        var eventType: EventType?
+        var eventToss, eventManOfMatch: String?
+        var eventStadium: EventStadium?
+        var eventHomeTeamLogo, eventAwayTeamLogo: String?
+        var scorecard: ScorecardUnion?
+        var comments: Comments?
+        var wickets: Wickets?
+        var extra: ExtraUnion?
         var lineups: Lineups?
-        var statistics: [Statistic]?
 
         enum CodingKeys: String, CodingKey {
             case eventKey = "event_key"
-            case eventDate = "event_date"
+            case eventDateStart = "event_date_start"
+            case eventDateStop = "event_date_stop"
             case eventTime = "event_time"
             case eventHomeTeam = "event_home_team"
             case homeTeamKey = "home_team_key"
             case eventAwayTeam = "event_away_team"
             case awayTeamKey = "away_team_key"
-            case eventHalftimeResult = "event_halftime_result"
-            case eventFinalResult = "event_final_result"
-            case eventFtResult = "event_ft_result"
-            case eventPenaltyResult = "event_penalty_result"
+            case eventServiceHome = "event_service_home"
+            case eventServiceAway = "event_service_away"
+            case eventHomeFinalResult = "event_home_final_result"
+            case eventAwayFinalResult = "event_away_final_result"
+            case eventHomeRr = "event_home_rr"
+            case eventAwayRr = "event_away_rr"
             case eventStatus = "event_status"
+            case eventStatusInfo = "event_status_info"
             case countryName = "country_name"
             case leagueName = "league_name"
             case leagueKey = "league_key"
             case leagueRound = "league_round"
             case leagueSeason = "league_season"
             case eventLive = "event_live"
+            case eventType = "event_type"
+            case eventToss = "event_toss"
+            case eventManOfMatch = "event_man_of_match"
             case eventStadium = "event_stadium"
-            case eventReferee = "event_referee"
-            case homeTeamLogo = "home_team_logo"
-            case awayTeamLogo = "away_team_logo"
-            case eventCountryKey = "event_country_key"
-            case leagueLogo = "league_logo"
-            case countryLogo = "country_logo"
-            case eventHomeFormation = "event_home_formation"
-            case eventAwayFormation = "event_away_formation"
-            case fkStageKey = "fk_stage_key"
-            case stageName = "stage_name"
-            case leagueGroup = "league_group"
-            case goalscorers, substitutes, cards, lineups, statistics
+            case eventHomeTeamLogo = "event_home_team_logo"
+            case eventAwayTeamLogo = "event_away_team_logo"
+            case scorecard, comments, wickets, extra, lineups
         }
 
-        init(eventKey: Int?, eventDate: String?, eventTime: EventTime?, eventHomeTeam: String?, homeTeamKey: Int?, eventAwayTeam: String?, awayTeamKey: Int?, eventHalftimeResult: EventHalftimeResult?, eventFinalResult: String?, eventFtResult: String?, eventPenaltyResult: String?, eventStatus: String?, countryName: CountryName?, leagueName: LeagueName?, leagueKey: Int?, leagueRound: String?, leagueSeason: LeagueSeason?, eventLive: String?, eventStadium: String?, eventReferee: String?, homeTeamLogo: String?, awayTeamLogo: String?, eventCountryKey: Int?, leagueLogo: String?, countryLogo: String?, eventHomeFormation: String?, eventAwayFormation: String?, fkStageKey: Int?, stageName: StageName?, leagueGroup: JSONNull?, goalscorers: [Goalscorer]?, substitutes: [Substitute]?, cards: [CardElement]?, lineups: Lineups?, statistics: [Statistic]?) {
+        init(eventKey: Int?, eventDateStart: String?, eventDateStop: String?, eventTime: EventTime?, eventHomeTeam: String?, homeTeamKey: Int?, eventAwayTeam: String?, awayTeamKey: Int?, eventServiceHome: EventServiceHome?, eventServiceAway: String?, eventHomeFinalResult: String?, eventAwayFinalResult: String?, eventHomeRr: String?, eventAwayRr: String?, eventStatus: EventStatus?, eventStatusInfo: String?, countryName: CountryName?, leagueName: LeagueName?, leagueKey: Int?, leagueRound: String?, leagueSeason: LeagueSeason?, eventLive: String?, eventType: EventType?, eventToss: String?, eventManOfMatch: String?, eventStadium: EventStadium?, eventHomeTeamLogo: String?, eventAwayTeamLogo: String?, scorecard: ScorecardUnion?, comments: Comments?, wickets: Wickets?, extra: ExtraUnion?, lineups: Lineups?) {
             self.eventKey = eventKey
-            self.eventDate = eventDate
+            self.eventDateStart = eventDateStart
+            self.eventDateStop = eventDateStop
             self.eventTime = eventTime
             self.eventHomeTeam = eventHomeTeam
             self.homeTeamKey = homeTeamKey
             self.eventAwayTeam = eventAwayTeam
             self.awayTeamKey = awayTeamKey
-            self.eventHalftimeResult = eventHalftimeResult
-            self.eventFinalResult = eventFinalResult
-            self.eventFtResult = eventFtResult
-            self.eventPenaltyResult = eventPenaltyResult
+            self.eventServiceHome = eventServiceHome
+            self.eventServiceAway = eventServiceAway
+            self.eventHomeFinalResult = eventHomeFinalResult
+            self.eventAwayFinalResult = eventAwayFinalResult
+            self.eventHomeRr = eventHomeRr
+            self.eventAwayRr = eventAwayRr
             self.eventStatus = eventStatus
+            self.eventStatusInfo = eventStatusInfo
             self.countryName = countryName
             self.leagueName = leagueName
             self.leagueKey = leagueKey
             self.leagueRound = leagueRound
             self.leagueSeason = leagueSeason
             self.eventLive = eventLive
+            self.eventType = eventType
+            self.eventToss = eventToss
+            self.eventManOfMatch = eventManOfMatch
             self.eventStadium = eventStadium
-            self.eventReferee = eventReferee
-            self.homeTeamLogo = homeTeamLogo
-            self.awayTeamLogo = awayTeamLogo
-            self.eventCountryKey = eventCountryKey
-            self.leagueLogo = leagueLogo
-            self.countryLogo = countryLogo
-            self.eventHomeFormation = eventHomeFormation
-            self.eventAwayFormation = eventAwayFormation
-            self.fkStageKey = fkStageKey
-            self.stageName = stageName
-            self.leagueGroup = leagueGroup
-            self.goalscorers = goalscorers
-            self.substitutes = substitutes
-            self.cards = cards
+            self.eventHomeTeamLogo = eventHomeTeamLogo
+            self.eventAwayTeamLogo = eventAwayTeamLogo
+            self.scorecard = scorecard
+            self.comments = comments
+            self.wickets = wickets
+            self.extra = extra
             self.lineups = lineups
-            self.statistics = statistics
         }
     }
 
-    // MARK: - CardElement
-    class CardElement: Codable {
-        var time, homeFault: String?
-        var card: CardEnum?
-        var awayFault: String?
-        var info: Info?
-        var homePlayerID: HomePlayerID?
-        var awayPlayerID: String?
-        var infoTime: InfoTime?
+    enum Comments: Codable {
+        case anythingArray([JSONAny])
+        case commentArrayMap([String: [Comment]])
 
-        enum CodingKeys: String, CodingKey {
-            case time
-            case homeFault = "home_fault"
-            case card
-            case awayFault = "away_fault"
-            case info
-            case homePlayerID = "home_player_id"
-            case awayPlayerID = "away_player_id"
-            case infoTime = "info_time"
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let x = try? container.decode([JSONAny].self) {
+                self = .anythingArray(x)
+                return
+            }
+            if let x = try? container.decode([String: [Comment]].self) {
+                self = .commentArrayMap(x)
+                return
+            }
+            throw DecodingError.typeMismatch(Comments.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for Comments"))
         }
 
-        init(time: String?, homeFault: String?, card: CardEnum?, awayFault: String?, info: Info?, homePlayerID: HomePlayerID?, awayPlayerID: String?, infoTime: InfoTime?) {
-            self.time = time
-            self.homeFault = homeFault
-            self.card = card
-            self.awayFault = awayFault
-            self.info = info
-            self.homePlayerID = homePlayerID
-            self.awayPlayerID = awayPlayerID
-            self.infoTime = infoTime
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            switch self {
+            case .anythingArray(let x):
+                try container.encode(x)
+            case .commentArrayMap(let x):
+                try container.encode(x)
+            }
         }
     }
 
-    enum CardEnum: String, Codable {
-        case redCard = "red card"
-        case yellowCard = "yellow card"
+    // MARK: - Comment
+    class Comment: Codable {
+        var innings: Innings?
+        var balls, overs: String?
+        var ended: Ended?
+        var runs, post: String?
+
+        init(innings: Innings?, balls: String?, overs: String?, ended: Ended?, runs: String?, post: String?) {
+            self.innings = innings
+            self.balls = balls
+            self.overs = overs
+            self.ended = ended
+            self.runs = runs
+            self.post = post
+        }
     }
 
-    enum HomePlayerID: String, Codable {
-        case empty = ""
-        case the3215501330 = "3215501330"
-        case the3543847450 = "3543847450"
+    enum Ended: String, Codable {
+        case no = "No"
+        case yes = "Yes"
     }
 
-    enum Info: String, Codable {
-        case away = "away"
-        case empty = ""
-        case home = "home"
-        case penalty = "Penalty"
-    }
-
-    enum InfoTime: String, Codable {
-        case the1StHalf = "1st Half"
-        case the2NdHalf = "2nd Half"
+    enum Innings: String, Codable {
+        case bagmatiProvinceUnder19S1INN = "Bagmati Province Under-19s 1 INN"
+        case bagmatiProvinceUnder19S2INN = "Bagmati Province Under-19s 2 INN"
+        case gandakiProvinceUnder19S1INN = "Gandaki Province Under-19s 1 INN"
+        case gandakiProvinceUnder19S2INN = "Gandaki Province Under-19s 2 INN"
+        case karnaliProvinceUnder19S1INN = "Karnali Province Under-19s 1 INN"
+        case karnaliProvinceUnder19S2INN = "Karnali Province Under-19s 2 INN"
+        case lumbiniProvinceUnder19S1INN = "Lumbini Province Under-19s 1 INN"
+        case lumbiniProvinceUnder19S2INN = "Lumbini Province Under-19s 2 INN"
+        case madheshProvinceUnder19S1INN = "Madhesh Province Under-19s 1 INN"
+        case madheshProvinceUnder19S2INN = "Madhesh Province Under-19s 2 INN"
+        case provinceNumber1Under19S1INN = "Province Number 1 Under-19s 1 INN"
+        case provinceNumber1Under19S2INN = "Province Number 1 Under-19s 2 INN"
+        case sudurPaschimProvinceUnder19S1INN = "Sudur Paschim Province Under-19s 1 INN"
+        case sudurPaschimProvinceUnder19S2INN = "Sudur Paschim Province Under-19s 2 INN"
     }
 
     enum CountryName: String, Codable {
-        case ghana = "Ghana"
+        case cricket = "Cricket"
     }
 
-    enum EventHalftimeResult: String, Codable {
+    enum EventServiceHome: String, Codable {
         case empty = ""
-        case the00 = "0 - 0"
-        case the01 = "0 - 1"
-        case the02 = "0 - 2"
-        case the10 = "1 - 0"
-        case the11 = "1 - 1"
-        case the12 = "1 - 2"
-        case the20 = "2 - 0"
-        case the21 = "2 - 1"
-        case the30 = "3 - 0"
-        case the32 = "3 - 2"
-        case the40 = "4 - 0"
+        case the28445Ov = "28.4/45 ov"
+        case the31345Ov = "31.3/45 ov"
+        case the36340Ov = "36.3/40 ov"
+    }
+
+    enum EventStadium: String, Codable {
+        case mulpaniCricketGround = "Mulpani Cricket Ground"
+        case tribhuvanUniversityInternationalCricketGroundKirtipur = "Tribhuvan University International Cricket Ground, Kirtipur"
+    }
+
+    enum EventStatus: String, Codable {
+        case empty = ""
+        case finished = "Finished"
     }
 
     enum EventTime: String, Codable {
-        case the1200 = "12:00"
-        case the1600 = "16:00"
-        case the1700 = "17:00"
-        case the1900 = "19:00"
-        case the1945 = "19:45"
-        case the2000 = "20:00"
-        case the2045 = "20:45"
-        case the2100 = "21:00"
+        case the0415 = "04:15"
     }
 
-    // MARK: - Goalscorer
-    class Goalscorer: Codable {
-        var time, homeScorer, homeScorerID: String?
-        var homeAssist: HomeAssist?
-        var homeAssistID, score, awayScorer, awayScorerID: String?
-        var awayAssist: AwayAssist?
-        var awayAssistID: String?
-        var info: Info?
-        var infoTime: InfoTime?
+    enum EventType: String, Codable {
+        case odi = "ODI"
+    }
+
+    enum ExtraUnion: Codable {
+        case anythingArray([JSONAny])
+        case extraValueMap([String: ExtraValue])
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let x = try? container.decode([JSONAny].self) {
+                self = .anythingArray(x)
+                return
+            }
+            if let x = try? container.decode([String: ExtraValue].self) {
+                self = .extraValueMap(x)
+                return
+            }
+            throw DecodingError.typeMismatch(ExtraUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ExtraUnion"))
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            switch self {
+            case .anythingArray(let x):
+                try container.encode(x)
+            case .extraValueMap(let x):
+                try container.encode(x)
+            }
+        }
+    }
+
+    // MARK: - ExtraValue
+    class ExtraValue: Codable {
+        var innings: Innings?
+        var nr, text: String?
+        var totalOvers: JSONNull?
+        var total: String?
+        var percentOver: JSONNull?
 
         enum CodingKeys: String, CodingKey {
-            case time
-            case homeScorer = "home_scorer"
-            case homeScorerID = "home_scorer_id"
-            case homeAssist = "home_assist"
-            case homeAssistID = "home_assist_id"
-            case score
-            case awayScorer = "away_scorer"
-            case awayScorerID = "away_scorer_id"
-            case awayAssist = "away_assist"
-            case awayAssistID = "away_assist_id"
-            case info
-            case infoTime = "info_time"
+            case innings, nr, text
+            case totalOvers = "total_overs"
+            case total
+            case percentOver = "percent_over"
         }
 
-        init(time: String?, homeScorer: String?, homeScorerID: String?, homeAssist: HomeAssist?, homeAssistID: String?, score: String?, awayScorer: String?, awayScorerID: String?, awayAssist: AwayAssist?, awayAssistID: String?, info: Info?, infoTime: InfoTime?) {
-            self.time = time
-            self.homeScorer = homeScorer
-            self.homeScorerID = homeScorerID
-            self.homeAssist = homeAssist
-            self.homeAssistID = homeAssistID
-            self.score = score
-            self.awayScorer = awayScorer
-            self.awayScorerID = awayScorerID
-            self.awayAssist = awayAssist
-            self.awayAssistID = awayAssistID
-            self.info = info
-            self.infoTime = infoTime
+        init(innings: Innings?, nr: String?, text: String?, totalOvers: JSONNull?, total: String?, percentOver: JSONNull?) {
+            self.innings = innings
+            self.nr = nr
+            self.text = text
+            self.totalOvers = totalOvers
+            self.total = total
+            self.percentOver = percentOver
         }
-    }
-
-    enum AwayAssist: String, Codable {
-        case empty = ""
-        case iSalifu = "I. Salifu"
-        case jMereku = "J. Mereku"
-    }
-
-    enum HomeAssist: String, Codable {
-        case cGyamfi = "C. Gyamfi"
-        case eAppau = "E. Appau"
-        case empty = ""
-        case mArthur = "M. Arthur"
-        case mOmgba = "M. Omgba"
-        case sMukwala = "S. Mukwala"
     }
 
     enum LeagueName: String, Codable {
-        case premierLeague = "Premier League"
+        case canUnder19SNationalSelectionTournament = "CAN Under-19s National Selection Tournament"
     }
 
     enum LeagueSeason: String, Codable {
-        case the20222023 = "2022/2023"
+        case the202223 = "2022/23"
     }
 
     // MARK: - Lineups
@@ -287,83 +290,35 @@ class FootballEvents{
 
     // MARK: - Team
     class Team: Codable {
-        var startingLineups, substitutes, coaches, missingPlayers: [JSONAny]?
+        var startingLineups: [StartingLineup]?
 
         enum CodingKeys: String, CodingKey {
             case startingLineups = "starting_lineups"
-            case substitutes, coaches
-            case missingPlayers = "missing_players"
         }
 
-        init(startingLineups: [JSONAny]?, substitutes: [JSONAny]?, coaches: [JSONAny]?, missingPlayers: [JSONAny]?) {
+        init(startingLineups: [StartingLineup]?) {
             self.startingLineups = startingLineups
-            self.substitutes = substitutes
-            self.coaches = coaches
-            self.missingPlayers = missingPlayers
         }
     }
 
-    enum StageName: String, Codable {
-        case current = "Current"
-    }
-
-    // MARK: - Statistic
-    class Statistic: Codable {
-        var type: TypeEnum?
-        var home, away: String?
-
-        init(type: TypeEnum?, home: String?, away: String?) {
-            self.type = type
-            self.home = home
-            self.away = away
-        }
-    }
-
-    enum TypeEnum: String, Codable {
-        case attacks = "Attacks"
-        case dangerousAttacks = "Dangerous Attacks"
-        case offTarget = "Off Target"
-        case onTarget = "On Target"
-        case penalty = "Penalty"
-        case substitution = "Substitution"
-    }
-
-    // MARK: - Substitute
-    class Substitute: Codable {
-        var time: String?
-        var homeScorer: AwayScorerUnion?
-        var homeAssist: String?
-        var score: Score?
-        var awayScorer: AwayScorerUnion?
-        var awayAssist, info: String?
-        var infoTime: InfoTime?
+    // MARK: - StartingLineup
+    class StartingLineup: Codable {
+        var player, playerCountry: String?
 
         enum CodingKeys: String, CodingKey {
-            case time
-            case homeScorer = "home_scorer"
-            case homeAssist = "home_assist"
-            case score
-            case awayScorer = "away_scorer"
-            case awayAssist = "away_assist"
-            case info
-            case infoTime = "info_time"
+            case player
+            case playerCountry = "player_country"
         }
 
-        init(time: String?, homeScorer: AwayScorerUnion?, homeAssist: String?, score: Score?, awayScorer: AwayScorerUnion?, awayAssist: String?, info: String?, infoTime: InfoTime?) {
-            self.time = time
-            self.homeScorer = homeScorer
-            self.homeAssist = homeAssist
-            self.score = score
-            self.awayScorer = awayScorer
-            self.awayAssist = awayAssist
-            self.info = info
-            self.infoTime = infoTime
+        init(player: String?, playerCountry: String?) {
+            self.player = player
+            self.playerCountry = playerCountry
         }
     }
 
-    enum AwayScorerUnion: Codable {
+    enum ScorecardUnion: Codable {
         case anythingArray([JSONAny])
-        case awayScorerClass(AwayScorerClass)
+        case scorecardElementArrayMap([String: [ScorecardElement]])
 
         init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
@@ -371,11 +326,11 @@ class FootballEvents{
                 self = .anythingArray(x)
                 return
             }
-            if let x = try? container.decode(AwayScorerClass.self) {
-                self = .awayScorerClass(x)
+            if let x = try? container.decode([String: [ScorecardElement]].self) {
+                self = .scorecardElementArrayMap(x)
                 return
             }
-            throw DecodingError.typeMismatch(AwayScorerUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for AwayScorerUnion"))
+            throw DecodingError.typeMismatch(ScorecardUnion.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for ScorecardUnion"))
         }
 
         func encode(to encoder: Encoder) throws {
@@ -383,34 +338,101 @@ class FootballEvents{
             switch self {
             case .anythingArray(let x):
                 try container.encode(x)
-            case .awayScorerClass(let x):
+            case .scorecardElementArrayMap(let x):
                 try container.encode(x)
             }
         }
     }
 
-    // MARK: - AwayScorerClass
-    class AwayScorerClass: Codable {
-        var scorerIn, out: String?
-        var inID, outID: Int?
+    // MARK: - ScorecardElement
+    class ScorecardElement: Codable {
+        var innings: Innings?
+        var player: String?
+        var type: TypeEnum?
+        var status: String?
+        var r: Int?
+        var b, min, the4S, the6S: Int?
+        var o: Double?
+        var m, w: Int?
+        var sr, er: String?
 
         enum CodingKeys: String, CodingKey {
-            case scorerIn = "in"
-            case out
-            case inID = "in_id"
-            case outID = "out_id"
+            case innings, player, type, status
+            case r = "R"
+            case b = "B"
+            case min = "Min"
+            case the4S = "4s"
+            case the6S = "6s"
+            case o = "O"
+            case m = "M"
+            case w = "W"
+            case sr = "SR"
+            case er = "ER"
         }
 
-        init(scorerIn: String?, out: String?, inID: Int?, outID: Int?) {
-            self.scorerIn = scorerIn
-            self.out = out
-            self.inID = inID
-            self.outID = outID
+        init(innings: Innings?, player: String?, type: TypeEnum?, status: String?, r: Int?, b: Int?, min: Int?, the4S: Int?, the6S: Int?, o: Double?, m: Int?, w: Int?, sr: String?, er: String?) {
+            self.innings = innings
+            self.player = player
+            self.type = type
+            self.status = status
+            self.r = r
+            self.b = b
+            self.min = min
+            self.the4S = the4S
+            self.the6S = the6S
+            self.o = o
+            self.m = m
+            self.w = w
+            self.sr = sr
+            self.er = er
         }
     }
 
-    enum Score: String, Codable {
-        case substitution = "substitution"
+    enum TypeEnum: String, Codable {
+        case batsman = "Batsman"
+        case bowler = "Bowler"
+    }
+
+    enum Wickets: Codable {
+        case anythingArray([JSONAny])
+        case wicketArrayMap([String: [Wicket]])
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            if let x = try? container.decode([JSONAny].self) {
+                self = .anythingArray(x)
+                return
+            }
+            if let x = try? container.decode([String: [Wicket]].self) {
+                self = .wicketArrayMap(x)
+                return
+            }
+            throw DecodingError.typeMismatch(Wickets.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for Wickets"))
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            switch self {
+            case .anythingArray(let x):
+                try container.encode(x)
+            case .wicketArrayMap(let x):
+                try container.encode(x)
+            }
+        }
+    }
+
+    // MARK: - Wicket
+    class Wicket: Codable {
+        var innings: Innings?
+        var fall, balwer, batsman, score: String?
+
+        init(innings: Innings?, fall: String?, balwer: String?, batsman: String?, score: String?) {
+            self.innings = innings
+            self.fall = fall
+            self.balwer = balwer
+            self.batsman = batsman
+            self.score = score
+        }
     }
 
     // MARK: - Encode/decode helpers

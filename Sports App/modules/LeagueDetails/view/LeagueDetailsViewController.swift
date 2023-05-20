@@ -20,11 +20,15 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
     @IBOutlet weak var latestResultsCell: UICollectionView!
     
     
-    
+    var activityIndicator = UIActivityIndicatorView(style: .large)
     private var viewModel : LeaugeDetailsViewModel?
     var league:League?
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
         viewModel = LeagueDetailsDependancyFactory.viewModel(league: self.league!, pleagueDetails: self)
         viewModel?.prepareLeageDetails()
         
@@ -35,16 +39,24 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
         latestResultsCell.delegate = self
         latestResultsCell.dataSource = self
     }
+    @IBAction func backBtnClicked(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
+    }
+    @IBAction func favoriteAction(_ sender: UIBarButtonItem) {
+    }
     func refrishUserInterface() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
         upComingCell.reloadData()
         latestResultsCell.reloadData()
         teamsCell.reloadData()
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         // number of items for teams
         if collectionView == teamsCell {
-                return viewModel?.teams?.count ?? 0
+                return viewModel?.teams?.count ?? 1
            
         }
         // number of items for upComing Event
@@ -68,6 +80,7 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
         }
         return viewModel?.events?.tennisLatestEvents?.count ?? 0
     }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -130,8 +143,10 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
         {
             // cofiguration  cell for Latest Results
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "latestResults", for: indexPath) as! LatestResultsCollectionViewCell
+            cell.layer.cornerRadius = 25
             cell.layer.borderColor = UIColor.darkGray.cgColor
             cell.layer.borderWidth = 0.3
+            cell.clipsToBounds = true
             
             if league?.sport == "football"{
                 let event = viewModel?.events?.footLatestEvents?[indexPath.row]
@@ -145,7 +160,7 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                 
                 cell.eventDateLabel.text = event?.eventDate ?? ""
                 cell.eventTimeLabel.text = event?.eventTime?.rawValue ?? ""
-                cell.eventFinalResultLabel.text = event?.eventFinalResult ?? ""
+                cell.eventFinalResultLabel.text = event?.eventFinalResult?.rawValue ?? ""
                 
             }else if league?.sport == "basketball"{
                 let event = viewModel?.events?.basketLatestEvents?[indexPath.row]
@@ -191,6 +206,16 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                 
             }
             return cell
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == teamsCell {
+            let teamDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
+            teamDetailsPage.league = self.league
+            teamDetailsPage.team = viewModel?.teams?[indexPath.row]
+            teamDetailsPage.modalTransitionStyle = .crossDissolve
+            teamDetailsPage.modalPresentationStyle = .fullScreen
+            self.present(teamDetailsPage, animated: true)
         }
     }
 }
