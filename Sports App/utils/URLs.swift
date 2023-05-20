@@ -77,20 +77,7 @@ class URLs{
     func TennisLatestEvents(leagueKey:String)->String{
       return "https://apiv2.allsportsapi.com/tennis/?met=Fixtures&leagueId=\(leagueKey)&from=2022-01-18&to=2023-01-18&APIkey=\(Constants.apiKey)"
   }
-    //latest results
-    
-      func FootballLeagueLatestResult(leagueKey:String)->String{
-        return "https://apiv2.allsportsapi.com/football?met=Fixtures&leagueId=\(leagueKey)&from=2023-01-18&to=2024-01-18&APIkey=\(Constants.apiKey)"
-    }
-      func BasketballLeagueLatestResult(leagueKey:String)->String{
-        return "https://apiv2.allsportsapi.com/basketball?met=Fixtures&leagueId=\(leagueKey)&from=2023-01-18&to=2024-01-18&APIkey=\(Constants.apiKey)"
-    }
-      func CricketLeagueLatestResult(leagueKey:String)->String{
-        return "https://apiv2.allsportsapi.com/cricket?met=Fixtures&leagueId=\(leagueKey)&from=2023-01-18&to=2024-01-18&APIkey=\(Constants.apiKey)"
-    }
-      func TennisLeagueLatestResult(leagueKey:String)->String{
-        return "https://apiv2.allsportsapi.com/tennis?met=Fixtures&leagueId=\(leagueKey)&from=2023-01-18&to=2024-01-18&APIkey=\(Constants.apiKey)"
-    }
+   
     
     //team details
     

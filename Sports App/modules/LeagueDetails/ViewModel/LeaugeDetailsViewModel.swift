@@ -23,24 +23,9 @@ struct Team:Hashable{
     var image:String?
     var teamKey:Int?
 }
-struct CricketTeam:Hashable{
-    var name:String?
-    var key:Int?
-    var image:CricketEvents.JSONNull?
-}
-struct TennisTeam:Hashable{
-    var name:String?
-    var key:Int?
-    var image:TennisEvents.JSONNull?
-}
-struct Teams{
-    var footTeams:Set<Team>?
-    var basketTeams:Set<Team>?
-    var cricketTeams:Set<CricketTeam>?
-    var tennisTeams:Set<TennisTeam>?
-}
+
 class LeaugeDetailsViewModel{
-    var teams:Teams?
+    var teams:Array<Team>?
     var events:Events?
     private var footNetworkManager:PFootballNetworkManager?
     private var basketNetworkManager:PBasketballNetworkManager?
@@ -57,7 +42,7 @@ class LeaugeDetailsViewModel{
         self.league = league
         self.dbManager = dbManager
         self.leagueDetailsViewController = leagueDetailsViewController
-        teams = Teams()
+        teams = []
         events = Events()
     }
     
@@ -96,6 +81,7 @@ class LeaugeDetailsViewModel{
             events?.footLatestEvents = []
             footNetworkManager?.fetchEvents(mode: 1, leagueId: league.id!, complition: { it in
                 self.events?.footLatestEvents = it?.result
+                
                 self.prepareTeams()
             })
         }else if( league.sport == "basketball"){
@@ -121,45 +107,49 @@ class LeaugeDetailsViewModel{
     private func prepareTeams(){
         
         if(league.sport == "football"){
-            teams?.footTeams = []
+            var footTeams = Set<Team>()
             events?.footUpComingEvents?.forEach({it in
-                teams?.footTeams?.insert(Team(name: it.eventAwayTeam,image: it.awayTeamLogo,teamKey: it.awayTeamKey))
-                teams?.footTeams?.insert(Team(name: it.eventHomeTeam,image: it.homeTeamLogo,teamKey: it.homeTeamKey))
+                footTeams.insert(Team(name: it.eventAwayTeam,image: it.awayTeamLogo,teamKey: it.awayTeamKey))
+                footTeams.insert(Team(name: it.eventHomeTeam,image: it.homeTeamLogo,teamKey: it.homeTeamKey))
             })
             events?.footLatestEvents?.forEach({it in
-                teams?.footTeams?.insert(Team(name: it.eventAwayTeam,image: it.awayTeamLogo,teamKey:it.awayTeamKey))
-                teams?.footTeams?.insert(Team(name: it.eventHomeTeam,image: it.homeTeamLogo,teamKey:it.homeTeamKey))
+                footTeams.insert(Team(name: it.eventAwayTeam,image: it.awayTeamLogo,teamKey:it.awayTeamKey))
+                footTeams.insert(Team(name: it.eventHomeTeam,image: it.homeTeamLogo,teamKey:it.homeTeamKey))
             })
+            teams = Array(footTeams)
         }else if( league.sport == "basketball"){
-            teams?.basketTeams = []
+            var basketTeams = Set<Team>()
             events?.basketUpcomingEvents?.forEach({it in
-                teams?.basketTeams?.insert(Team(name: it.eventAwayTeam,image: it.eventAwayTeamLogo,teamKey: it.awayTeamKey))
-                teams?.basketTeams?.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo,teamKey: it.homeTeamKey))
+                basketTeams.insert(Team(name: it.eventAwayTeam,image: it.eventAwayTeamLogo,teamKey: it.awayTeamKey))
+                basketTeams.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo,teamKey: it.homeTeamKey))
             })
             events?.basketLatestEvents?.forEach({it in
-                teams?.basketTeams?.insert(Team(name: it.eventAwayTeam,image: it.eventAwayTeamLogo,teamKey: it.awayTeamKey))
-                teams?.basketTeams?.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo,teamKey: it.homeTeamKey))
+                basketTeams.insert(Team(name: it.eventAwayTeam,image: it.eventAwayTeamLogo,teamKey: it.awayTeamKey))
+                basketTeams.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo,teamKey: it.homeTeamKey))
             })
+            teams  = Array(basketTeams)
         }else if(league.sport == "cricket"){
-            teams?.cricketTeams = []
+            var cricketTeams = Set<Team>()
             events?.cricketUpcomingEvents?.forEach({it in
-                teams?.cricketTeams?.insert(CricketTeam(name: it.eventAwayTeam,key: it.awayTeamKey, image: it.eventAwayTeamLogo))
-                teams?.cricketTeams?.insert(CricketTeam(name: it.eventHomeTeam,key: it.homeTeamKey,image: it.eventHomeTeamLogo))
+                cricketTeams.insert(Team(name: it.eventAwayTeam, image: it.eventAwayTeamLogo,teamKey: it.awayTeamKey))
+                cricketTeams.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo, teamKey: it.homeTeamKey))
             })
             events?.cricketLatestEvents?.forEach({it in
-                teams?.cricketTeams?.insert(CricketTeam(name: it.eventAwayTeam,key: it.awayTeamKey,image: it.eventAwayTeamLogo))
-                teams?.cricketTeams?.insert(CricketTeam(name: it.eventHomeTeam,key: it.homeTeamKey,image: it.eventHomeTeamLogo))
+                cricketTeams.insert(Team(name: it.eventAwayTeam,image: it.eventAwayTeamLogo, teamKey: it.awayTeamKey))
+                cricketTeams.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo, teamKey: it.homeTeamKey))
             })
+            teams = Array(cricketTeams)
         }else if (league.sport == "tennis"){
-            teams?.tennisTeams = []
+            var tennisTeams = Set<Team>()
             events?.tennisUpcomingEvents?.forEach({it in
-                teams?.tennisTeams?.insert(TennisTeam(name: it.eventFirstPlayer,key: it.firstPlayerKey, image: it.eventFirstPlayerLogo))
-                teams?.tennisTeams?.insert(TennisTeam(name: it.eventSecondPlayer,key: it.secondPlayerKey, image: it.eventSecondPlayerLogo))
+                tennisTeams.insert(Team(name: it.eventFirstPlayer,image: it.eventFirstPlayerLogo, teamKey: it.firstPlayerKey))
+                tennisTeams.insert(Team(name: it.eventSecondPlayer,image: it.eventSecondPlayerLogo, teamKey: it.secondPlayerKey))
             })
             events?.tennisLatestEvents?.forEach({it in
-                teams?.tennisTeams?.insert(TennisTeam(name: it.eventFirstPlayer,key: it.firstPlayerKey,image: it.eventFirstPlayerLogo))
-                teams?.tennisTeams?.insert(TennisTeam(name: it.eventSecondPlayer,key: it.secondPlayerKey,image: it.eventSecondPlayerLogo))
+                tennisTeams.insert(Team(name: it.eventFirstPlayer,image: it.eventFirstPlayerLogo, teamKey: it.firstPlayerKey))
+                tennisTeams.insert(Team(name: it.eventSecondPlayer,image: it.eventSecondPlayerLogo, teamKey: it.secondPlayerKey))
             })
+            teams  = Array(tennisTeams)
         }
         leagueDetailsViewController.refrishUserInterface()
     }

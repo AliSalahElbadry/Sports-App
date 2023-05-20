@@ -44,7 +44,6 @@ class FootballNetworkManager : PFootballNetworkManager{
             
         }else  {
             url = urls.FootballLatestEvents(leagueKey: leagueId)
-            
         }
         AF.request(url ?? "").response
         { response in
@@ -52,6 +51,10 @@ class FootballNetworkManager : PFootballNetworkManager{
                 do{
                     let result = try JSONDecoder().decode(FootballEvents.EventsWelcome.self, from: data)
                     DispatchQueue.main.async {
+                        if(mode == 1){
+                            print(url)
+                            print(result)
+                        }
                         complition(result)
                     }
                 }

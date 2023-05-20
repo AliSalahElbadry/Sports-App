@@ -6,22 +6,39 @@
 //
 
 import UIKit
-
+import Kingfisher
 protocol LeaguesTableProtocol{
     func showLeagues()
 }
 class LeaugesTableViewController: UITableViewController, LeaguesTableProtocol {
-    
+    var activityIndicator = UIActivityIndicatorView(style: .large)
     var viewModel: LeaguesViewModel?
     var sportName:String?
     func showLeagues() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
         tableView.reloadData()
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = view.center
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
         viewModel =  LeaguesDependancyFactory.viewModel(sportName: sportName ?? "football",leagueProtocol: self)
+        viewModel?.getLeagues()
+        if(sportName == "football"){
+            self.title = "Football leagues"
+        }else if(sportName == "basketball"){
+            self.title = "Basketball leagues"
+        }else if(sportName == "cricket"){
+            self.title = "Cricket leagues"
+        }else{
+            self.title = "Tennis leagues"
+        }
+         
     }
 
     // MARK: - Table view data source
@@ -36,59 +53,50 @@ class LeaugesTableViewController: UITableViewController, LeaguesTableProtocol {
         return viewModel?.leagues?.count ?? 0
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "leagueCell", for: indexPath) as! LeagueTableViewCell
+        cell.contentView.layer.cornerRadius = 20
+        cell.contentView.layer.masksToBounds = true
+        
+        cell.leagueLabel.text = viewModel?.leagues?[indexPath.row].name
+       
+        switch sportName {
+        case "football" :
+            var str = viewModel?.leagues?[indexPath.row].image
+            let predicate = NSPredicate(format:"SELF ENDSWITH[c] %@", ".png")
+            let result = predicate.evaluate(with: str)
+            
+            //MARK: - kingfisher
+            if result{
+                let url = URL(string: str!)
+                cell.leagueImg.kf.setImage(with: url)
+                
+            }else{
+                cell.leagueImg.image = UIImage(named: "football")
+            }
+        case "basketball" :
+            cell.leagueImg.image = UIImage(named: "NewBasketball")
+        case "cricket" :
+            cell.leagueImg.image = UIImage(named: "NewCricket")
+        case "tennis" :
+            cell.leagueImg.image = UIImage(named: "tennis")
+        default:
+            break
+        }
+ 
         return cell
     }
-    */
+    
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let leagueDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
+        leagueDetailsPage.league = viewModel?.leagues?[indexPath.row]
+        leagueDetailsPage.modalTransitionStyle = .crossDissolve
+        leagueDetailsPage.modalPresentationStyle = .fullScreen
+        self.present(leagueDetailsPage, animated: true)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

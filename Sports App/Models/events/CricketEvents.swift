@@ -25,7 +25,7 @@ class CricketEvents{
         var awayTeamKey: Int?
         var eventServiceHome: EventServiceHome?
         var eventServiceAway, eventHomeFinalResult, eventAwayFinalResult: String?
-        var eventHomeRr, eventAwayRr: JSONNull?
+        var eventHomeRr, eventAwayRr: String?
         var eventStatus: EventStatus?
         var eventStatusInfo: String?
         var countryName: CountryName?
@@ -35,7 +35,7 @@ class CricketEvents{
         var eventType: EventType?
         var eventToss, eventManOfMatch: String?
         var eventStadium: EventStadium?
-        var eventHomeTeamLogo, eventAwayTeamLogo: JSONNull?
+        var eventHomeTeamLogo, eventAwayTeamLogo: String?
         var scorecard: [String: [Scorecard]]?
         var comments: Comments?
         var wickets: Wickets?

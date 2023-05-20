@@ -26,26 +26,26 @@ class LeaguesViewModel{
     }
     func getLeagues(){
         leagues = []
-        if(sportName == "foot"){
+        if(sportName == "football"){
             footNetworkManager?.fetchLeagues(complition: { it in
-                self.leagues = self.map_football_to_leages(res: it ?? nil) ?? []
+                self.map_football_to_leages(res: it )
             })
-        }else if( sportName == "basket"){
+        }else if( sportName == "basketball"){
             basketNetworkManager?.fetchLeagues(complition: { it in
-                self.leagues  = self.map_basket_to_leages(res: it ?? nil) ?? []
+                self.map_basket_to_leages(res: it)
             })
         }else if(sportName == "cricket"){
             cricketNetworkManager?.fetchLeagues(complition: { it in
-                self.leagues  = self.map_cricket_to_leages(res: it ?? nil) ?? []
+                self.map_cricket_to_leages(res: it)
             })
         }else if (sportName == "tennis"){
             tennisNetworkManager?.fetchLeagues(complition: { it in
-                self.leagues  = self.map_tennis_to_leages(res: it ?? nil) ?? []
+               self.map_tennis_to_leages(res: it ?? nil)
             })
         }
         
     }
-    private func map_football_to_leages(res:FootballLeaguesWelcome?)->Array<League>?
+    private func map_football_to_leages(res:FootballLeaguesWelcome?)
     {
         var arr : Array<League> = []
         res?.result.forEach({it in
@@ -57,9 +57,10 @@ class LeaguesViewModel{
             l.url = it.leagueName
             arr.append(l)
         })
-        return arr
+        self.leagues = arr
+        leaguesProtocol.showLeagues()
     }
-    private func map_basket_to_leages(res:BasketLeaguesWelcome?)->Array<League>?
+    private func map_basket_to_leages(res:BasketLeaguesWelcome?)
     {
         var arr : Array<League> = []
         res?.result.forEach({it in
@@ -71,9 +72,10 @@ class LeaguesViewModel{
             l.url = it.leagueName
             arr.append(l)
         })
-        return arr
+        self.leagues = arr
+        leaguesProtocol.showLeagues()
     }
-    private func map_cricket_to_leages(res:CricketLeaguesWelcome?)->Array<League>?
+    private func map_cricket_to_leages(res:CricketLeaguesWelcome?)
     {
         var arr : Array<League> = []
         res?.result.forEach({it in
@@ -85,9 +87,10 @@ class LeaguesViewModel{
             l.url = it.leagueName
             arr.append(l)
         })
-        return arr
+        self.leagues = arr
+        leaguesProtocol.showLeagues()
     }
-    private func map_tennis_to_leages(res:TennisLeaguesWelcome?)->Array<League>?
+    private func map_tennis_to_leages(res:TennisLeaguesWelcome?)
     {
         var arr : Array<League> = []
         res?.result?.forEach({it in
@@ -99,7 +102,8 @@ class LeaguesViewModel{
             l.url = it.leagueName
             arr.append(l)
         })
-        return arr
+        self.leagues = arr
+        leaguesProtocol.showLeagues()
     }
     
 }

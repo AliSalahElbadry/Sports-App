@@ -26,7 +26,7 @@ class TennisEvents{
         var eventSecondPlayer: String?
         var secondPlayerKey: Int?
         var eventFinalResult, eventGameResult: EventResult?
-        var eventServe: JSONNull?
+        var eventServe: String?
         var eventWinner: EventWinner?
         var eventStatus: EventStatus?
         var countryName: CountryName?
@@ -34,7 +34,7 @@ class TennisEvents{
         var leagueKey: Int?
         var leagueRound: LeagueRound?
         var leagueSeason, eventLive: String?
-        var eventFirstPlayerLogo, eventSecondPlayerLogo: JSONNull?
+        var eventFirstPlayerLogo, eventSecondPlayerLogo: String?
         var pointbypoint: [JSONAny]?
         var scores: [Score]?
 

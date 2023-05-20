@@ -16,7 +16,7 @@ class TennisPlayerDetails{
     struct Result: Codable {
         var playerKey: Int?
         var playerName: String?
-        var playerCountry, playerBday, playerLogo: JSONNull?
+        var playerCountry, playerBday, playerLogo: String?
         var stats, tournaments: [JSONAny]?
 
         enum CodingKeys: String, CodingKey {
