@@ -7,21 +7,12 @@
 
 import UIKit
 import Kingfisher
-protocol LeaguesTableProtocol{
-    func showLeagues()
-}
-class LeaugesViewController: UIViewController, LeaguesTableProtocol , UITableViewDelegate, UITableViewDataSource{
+
+class LeaugesViewController: UIViewController , UITableViewDelegate, UITableViewDataSource{
     @IBOutlet weak var tableView: UITableView!
     var activityIndicator = UIActivityIndicatorView(style: .large)
     var viewModel: LeaguesViewModel?
     var sportName:String?
-    func showLeagues() {
-        activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
-        tableView.reloadData()
-    }
-    
-    
     @IBAction func backIsPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
@@ -34,8 +25,14 @@ class LeaugesViewController: UIViewController, LeaguesTableProtocol , UITableVie
         activityIndicator.startAnimating()
         
         view.addSubview(activityIndicator)
-        viewModel =  LeaguesDependancyFactory.viewModel(sportName: sportName ?? "football",leagueProtocol: self)
+        viewModel =  LeaguesDependancyFactory.viewModel(sportName: sportName ?? "football")
+        viewModel?.showLeagues = {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.tableView.reloadData()
+        }
         viewModel?.getLeagues()
+        
         if(sportName == "football"){
             self.title = "Football leagues"
         }else if(sportName == "basketball"){

@@ -11,14 +11,13 @@ struct FootballLeaguesWelcome: Codable {
     let success: Int
     let result: [FootballLeaguesResult]
 }
-
 // MARK: - Result
 struct FootballLeaguesResult: Codable {
     let leagueKey: Int
     let leagueName: String
     let countryKey: Int
     let countryName: String
-    let leagueLogo, countryLogo: String
+    let leagueLogo, countryLogo: String?
 
     enum CodingKeys: String, CodingKey {
         case leagueKey = "league_key"
@@ -28,4 +27,6 @@ struct FootballLeaguesResult: Codable {
         case leagueLogo = "league_logo"
         case countryLogo = "country_logo"
     }
+
 }
+

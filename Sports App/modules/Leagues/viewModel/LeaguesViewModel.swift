@@ -14,15 +14,14 @@ class LeaguesViewModel{
    private var cricketNetworkManager:PCricketNetworkManager?
    private var tennisNetworkManager:PTennisNetworkManager?
    private  let sportName:String
-    let leaguesProtocol:LeaguesTableProtocol
-    init( footNetworkManager: PFootballNetworkManager? = nil, basketNetworkManager: PBasketballNetworkManager? = nil, cricketNetworkManager: PCricketNetworkManager? = nil, tennisNetworkManager: PTennisNetworkManager? = nil, sportName: String, leaguesProtocol: LeaguesTableProtocol) {
+    var showLeagues:()->()={}
+    init( footNetworkManager: PFootballNetworkManager? = nil, basketNetworkManager: PBasketballNetworkManager? = nil, cricketNetworkManager: PCricketNetworkManager? = nil, tennisNetworkManager: PTennisNetworkManager? = nil, sportName: String) {
         self.leagues = []
         self.footNetworkManager = footNetworkManager
         self.basketNetworkManager = basketNetworkManager
         self.cricketNetworkManager = cricketNetworkManager
         self.tennisNetworkManager = tennisNetworkManager
         self.sportName = sportName
-        self.leaguesProtocol = leaguesProtocol
     }
     func getLeagues(){
         leagues = []
@@ -58,7 +57,7 @@ class LeaguesViewModel{
             arr.append(l)
         })
         self.leagues = arr
-        leaguesProtocol.showLeagues()
+        showLeagues()
     }
     private func map_basket_to_leages(res:BasketLeaguesWelcome?)
     {
@@ -73,7 +72,7 @@ class LeaguesViewModel{
             arr.append(l)
         })
         self.leagues = arr
-        leaguesProtocol.showLeagues()
+        showLeagues()
     }
     private func map_cricket_to_leages(res:CricketLeaguesWelcome?)
     {
@@ -88,14 +87,14 @@ class LeaguesViewModel{
             arr.append(l)
         })
         self.leagues = arr
-        leaguesProtocol.showLeagues()
+       showLeagues()
     }
     private func map_tennis_to_leages(res:TennisLeaguesWelcome?)
     {
         var arr : Array<League> = []
-        res?.result?.forEach({it in
+        res?.result.forEach({it in
             let l:League=League()
-            l.id = String(it.leagueKey!)
+            l.id = String(it.leagueKey)
             l.name = it.leagueName
             l.image = "https://i0.wp.com/indiantennisdaily.com/wp-content/uploads/2022/11/301967932_509211634540389_3621829506550752633_n.jpg"
             l.sport = "football"
@@ -103,7 +102,7 @@ class LeaguesViewModel{
             arr.append(l)
         })
         self.leagues = arr
-        leaguesProtocol.showLeagues()
+        showLeagues()
     }
     
 }

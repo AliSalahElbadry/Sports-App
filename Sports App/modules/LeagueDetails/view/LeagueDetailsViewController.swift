@@ -7,10 +7,7 @@
 
 import UIKit
 
-protocol PLeagueDetailsViewController{
-    func refrishUserInterface()
-}
-class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewController, UICollectionViewDelegate , UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout {
+class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var TeamsLabel: UILabel!
     
     @IBOutlet weak var teamsCell: UICollectionView!
@@ -29,7 +26,14 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
         activityIndicator.center = view.center
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
-        viewModel = LeagueDetailsDependancyFactory.viewModel(league: self.league!, pleagueDetails: self)
+        viewModel = LeagueDetailsDependancyFactory.viewModel(league: self.league!)
+        viewModel?.refrishUserInterface = {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.upComingCell.reloadData()
+            self.latestResultsCell.reloadData()
+            self.teamsCell.reloadData()
+        }
         viewModel?.prepareLeageDetails()
         
         teamsCell.dataSource = self
@@ -44,13 +48,7 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
     }
     @IBAction func favoriteAction(_ sender: UIBarButtonItem) {
     }
-    func refrishUserInterface() {
-        activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
-        upComingCell.reloadData()
-        latestResultsCell.reloadData()
-        teamsCell.reloadData()
-    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -112,7 +110,7 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                               
                 let urlHome = URL(string: (event?.homeTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 let urlAway = URL(string: (event?.awayTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
-                cell.configureCell(homeTitle:event?.eventHomeTeam ?? "", awayTitle: event?.eventAwayTeam ?? "", eventDate: event?.eventDate ?? "" , homeLogo: event?.homeTeamLogo ?? "", awaylogo: event?.awayTeamLogo ?? "", eventTime:event?.eventTime?.rawValue ?? "")
+                cell.configureCell(homeTitle:event?.eventHomeTeam ?? "", awayTitle: event?.eventAwayTeam ?? "", eventDate: event?.eventDate ?? "" , homeLogo: event?.homeTeamLogo ?? "", awaylogo: event?.awayTeamLogo ?? "", eventTime:event?.eventTime ?? "")
                 cell.homeTeamImageView.kf.setImage(with: urlHome)
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
                 
@@ -120,14 +118,14 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                 let event = viewModel?.events?.basketUpcomingEvents?[indexPath.row]
                 let urlHome = URL(string: (event?.eventHomeTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 let urlAway = URL(string: (event?.eventAwayTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
-                cell.configureCell(homeTitle:event?.eventHomeTeam ?? "", awayTitle: event?.eventAwayTeam ?? "", eventDate: event?.eventDate ?? "" , homeLogo: event?.eventHomeTeamLogo ?? "", awaylogo: event?.eventAwayTeamLogo ?? "", eventTime:event?.eventTime?.rawValue ?? "")
+                cell.configureCell(homeTitle:event?.eventHomeTeam ?? "", awayTitle: event?.eventAwayTeam ?? "", eventDate: event?.eventDate ?? "" , homeLogo: event?.eventHomeTeamLogo ?? "", awaylogo: event?.eventAwayTeamLogo ?? "", eventTime:event?.eventTime ?? "")
                 cell.homeTeamImageView.kf.setImage(with: urlHome)
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
             }else if league?.sport == "cricket"{
                 let event = viewModel?.events?.cricketUpcomingEvents?[indexPath.row]
                 let urlHome = URL(string: (event?.eventHomeTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 let urlAway = URL(string: (event?.eventAwayTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
-                cell.configureCell(homeTitle:event?.eventHomeTeam ?? "", awayTitle: event?.eventAwayTeam ?? "", eventDate: event?.eventDateStart ?? "" , homeLogo: event?.eventHomeTeamLogo ?? "", awaylogo: event?.eventAwayTeamLogo ?? "", eventTime:event?.eventTime?.rawValue ?? "")
+                cell.configureCell(homeTitle:event?.eventHomeTeam ?? "", awayTitle: event?.eventAwayTeam ?? "", eventDate: event?.eventDate ?? "" , homeLogo: event?.eventHomeTeamLogo ?? "", awaylogo: event?.eventAwayTeamLogo ?? "", eventTime:event?.eventTime ?? "")
                 cell.homeTeamImageView.kf.setImage(with: urlHome)
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
             }else{
@@ -159,8 +157,8 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
                 
                 cell.eventDateLabel.text = event?.eventDate ?? ""
-                cell.eventTimeLabel.text = event?.eventTime?.rawValue ?? ""
-                cell.eventFinalResultLabel.text = event?.eventFinalResult?.rawValue ?? ""
+                cell.eventTimeLabel.text = event?.eventTime ?? ""
+                cell.eventFinalResultLabel.text = event?.eventFinalResult ?? ""
                 
             }else if league?.sport == "basketball"{
                 let event = viewModel?.events?.basketLatestEvents?[indexPath.row]
@@ -173,7 +171,7 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
                 
                 cell.eventDateLabel.text = event?.eventDate ?? ""
-                cell.eventTimeLabel.text = event?.eventTime?.rawValue ?? ""
+                cell.eventTimeLabel.text = event?.eventTime ?? ""
                 cell.eventFinalResultLabel.text = event?.eventFinalResult ?? ""
                 
             }else if league?.sport == "cricket"{
@@ -186,9 +184,9 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                 let urlAway = URL(string: (event?.eventAwayTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
                 
-                cell.eventDateLabel.text = event?.eventDateStop ?? ""
-                cell.eventTimeLabel.text = event?.eventTime?.rawValue ?? ""
-                cell.eventFinalResultLabel.text = event?.eventHomeFinalResult ?? ""
+                cell.eventDateLabel.text = event?.eventDate ?? ""
+                cell.eventTimeLabel.text = event?.eventTime ?? ""
+                cell.eventFinalResultLabel.text = event?.eventFinalResult ?? ""
                 
             }else{
                 let event = viewModel?.events?.tennisLatestEvents?[indexPath.row]
@@ -202,7 +200,7 @@ class LeagueDetailsViewController: UIViewController, PLeagueDetailsViewControlle
                 
                 cell.eventDateLabel.text = event?.eventDate
                 cell.eventTimeLabel.text = event?.eventTime
-                cell.eventFinalResultLabel.text = event?.eventFinalResult?.rawValue
+                cell.eventFinalResultLabel.text = event?.eventFinalResult
                 
             }
             return cell

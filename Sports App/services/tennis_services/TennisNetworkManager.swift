@@ -8,9 +8,8 @@ import Foundation
 import Alamofire
 protocol PTennisNetworkManager{
     func fetchLeagues(complition:@escaping (TennisLeaguesWelcome?) -> Void)
-    func fetchEvents(leagueId:String, complition:@escaping (TennisEvents.Welcome?) -> Void)
+    func fetchEvents(mode:Int,leagueId:String, complition:@escaping (TennisEvents.Welcome?) -> Void)
     func fetchPlayerDetails(playerId:String, complition:@escaping (TennisPlayerDetails.Welcome?) -> Void)
-    func fetchLatestEvents(leagueId: String, complition:@escaping (TennisEvents.Welcome?) -> Void)
 }
 class TennisNetworkManager : PTennisNetworkManager{
     
@@ -37,31 +36,15 @@ class TennisNetworkManager : PTennisNetworkManager{
         }
     }
     
-    func fetchEvents(leagueId: String, complition:@escaping (TennisEvents.Welcome?) -> Void) {
-        var url  =  urls.TennisUpcomingEvents(leagueKey: leagueId)
-        
-        AF.request(url ).response
-        { response in
-            if let data = response.data {
-                do{
-                    let result = try JSONDecoder().decode(TennisEvents.Welcome.self, from: data)
-                    DispatchQueue.main.async {
-                        complition(result)
-                    }
-                }
-                catch{
-                    complition(nil)
-                }
-            } else {
-                complition(nil)
-            }
+    func fetchEvents(mode:Int,leagueId: String, complition:@escaping (TennisEvents.Welcome?) -> Void) {
+        var url:String?
+        if(mode==0){
+            url  =  urls.TennisUpcomingEvents(leagueKey: leagueId)
+        }else if(mode==1)
+        {
+            url  = urls.TennisLatestEvents(leagueKey: leagueId)
         }
-    }
-    func fetchLatestEvents(leagueId: String, complition:@escaping (TennisEvents.Welcome?) -> Void) {
-        var url  = urls.TennisLatestEvents(leagueKey: leagueId)
-            
-        
-        AF.request(url ).response
+        AF.request(url!,method: .get ).response
         { response in
             if let data = response.data {
                 do{

@@ -24,3 +24,4 @@ struct CricketLeaguesResult: Codable {
         case leagueYear = "league_year"
     }
 }
+

@@ -7,20 +7,18 @@
 
 import UIKit
 
-protocol FavoritesLeaguesProtocol{
-    func showFavorites()
-}
 
-class FavoritesTableViewController: UITableViewController ,FavoritesLeaguesProtocol{
+class FavoritesTableViewController: UITableViewController {
     
     var favoriteViewModel : FavoritesViewModel?
     
-    func showFavorites() {
-        tableView.reloadData()
-    }
+     
     override func viewDidLoad() {
         super.viewDidLoad()
-        favoriteViewModel = FavoriteDependancyFactory.viewModel(favoriteLeagueProtocol: self)
+        favoriteViewModel = FavoriteDependancyFactory.viewModel()
+        favoriteViewModel?.showFavorites = {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source

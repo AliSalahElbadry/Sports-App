@@ -20,7 +20,7 @@ struct LeaguesDependancyFactory{
     static func cricketnetworkManager()->PCricketNetworkManager{
             return CricketNetworkManager()
     }
-    static func viewModel(sportName:String,leagueProtocol:LeaguesTableProtocol)->LeaguesViewModel{
+    static func viewModel(sportName:String)->LeaguesViewModel{
         var footNetworkManager:FootballNetworkManager?
         var basketNetworkManager:BasketballNetworkManager?
         var cricketNetworkManager:CricketNetworkManager?
@@ -34,7 +34,7 @@ struct LeaguesDependancyFactory{
         }else if (sportName  == "tennis"){
             tennisNetworkManager = self.tennisnetworkManager() as? TennisNetworkManager
         }
-        return LeaguesViewModel(footNetworkManager: footNetworkManager, basketNetworkManager: basketNetworkManager, cricketNetworkManager: cricketNetworkManager, tennisNetworkManager: tennisNetworkManager, sportName: sportName, leaguesProtocol: leagueProtocol)
+        return LeaguesViewModel(footNetworkManager: footNetworkManager, basketNetworkManager: basketNetworkManager, cricketNetworkManager: cricketNetworkManager, tennisNetworkManager: tennisNetworkManager, sportName: sportName)
     }
     
 }

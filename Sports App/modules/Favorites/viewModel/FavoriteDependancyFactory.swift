@@ -12,7 +12,7 @@ struct FavoriteDependancyFactory{
     static func dbManager()->PDBManager{
         return DBManager()
     }
-    static func viewModel(favoriteLeagueProtocol:FavoritesLeaguesProtocol)->FavoritesViewModel{
-        return FavoritesViewModel(dbManager: self.dbManager(), favoritesLeaguesProtocol: favoriteLeagueProtocol)
+    static func viewModel()->FavoritesViewModel{
+        return FavoritesViewModel(dbManager: self.dbManager())
     }
 }

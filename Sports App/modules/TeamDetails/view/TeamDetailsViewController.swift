@@ -7,10 +7,7 @@
 
 import UIKit
 
-protocol PTeamDetailsViewController{
-    func refrishTeamDetails()
-}
-class TeamDetailsViewController: UIViewController,PTeamDetailsViewController, UITableViewDataSource,UITableViewDelegate {
+class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     @IBOutlet weak var playersTable: UITableView!
     @IBOutlet weak var teamImg: UIImageView!
     @IBOutlet weak var teamName: UILabel!
@@ -18,14 +15,6 @@ class TeamDetailsViewController: UIViewController,PTeamDetailsViewController, UI
     var league:League?
     var team:Team?
     var viewModel:TeamDetailsViewModel?
-    func refrishTeamDetails() {
-        activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
-        playersTable.reloadData()
-    }
-    
-
-    
     @IBAction func backBtnPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
@@ -41,7 +30,12 @@ class TeamDetailsViewController: UIViewController,PTeamDetailsViewController, UI
         teamName.layer.borderColor = UIColor.red.cgColor
         teamName.text = team?.name
         teamImg.kf.setImage(with: URL(string:team?.image ?? ""))
-        viewModel = TeamDetailsViewModelDependancyFactory.viewModel(sportName: league?.sport ?? "", pTeamDetailsViewController: self, teamId: String(team?.teamKey ?? 0))
+        viewModel = TeamDetailsViewModelDependancyFactory.viewModel(sportName: league?.sport ?? "", teamId: String(team?.teamKey ?? 0))
+        viewModel?.refrishTeamDetails = {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.playersTable.reloadData()
+        }
         viewModel?.fetchTeam()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

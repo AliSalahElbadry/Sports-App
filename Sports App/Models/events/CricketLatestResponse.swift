@@ -28,15 +28,13 @@ class CricketLatestResponse{
         var awayTeamKey: Int?
         var eventServiceHome: EventServiceHome?
         var eventServiceAway, eventHomeFinalResult, eventAwayFinalResult: String?
-        var eventHomeRr, eventAwayRr: String?
+        var eventHomeRr, eventAwayRr: JSONNull?
         var eventStatus: EventStatus?
         var eventStatusInfo: String?
         var countryName: CountryName?
         var leagueName: LeagueName?
         var leagueKey: Int?
-        var leagueRound: String?
-        var leagueSeason: LeagueSeason?
-        var eventLive: String?
+        var leagueRound, leagueSeason, eventLive: String?
         var eventType: EventType?
         var eventToss, eventManOfMatch: String?
         var eventStadium: EventStadium?
@@ -79,7 +77,7 @@ class CricketLatestResponse{
             case scorecard, comments, wickets, extra, lineups
         }
 
-        init(eventKey: Int?, eventDateStart: String?, eventDateStop: String?, eventTime: EventTime?, eventHomeTeam: String?, homeTeamKey: Int?, eventAwayTeam: String?, awayTeamKey: Int?, eventServiceHome: EventServiceHome?, eventServiceAway: String?, eventHomeFinalResult: String?, eventAwayFinalResult: String?, eventHomeRr: String?, eventAwayRr: String?, eventStatus: EventStatus?, eventStatusInfo: String?, countryName: CountryName?, leagueName: LeagueName?, leagueKey: Int?, leagueRound: String?, leagueSeason: LeagueSeason?, eventLive: String?, eventType: EventType?, eventToss: String?, eventManOfMatch: String?, eventStadium: EventStadium?, eventHomeTeamLogo: String?, eventAwayTeamLogo: String?, scorecard: ScorecardUnion?, comments: Comments?, wickets: Wickets?, extra: ExtraUnion?, lineups: Lineups?) {
+        init(eventKey: Int?, eventDateStart: String?, eventDateStop: String?, eventTime: EventTime?, eventHomeTeam: String?, homeTeamKey: Int?, eventAwayTeam: String?, awayTeamKey: Int?, eventServiceHome: EventServiceHome?, eventServiceAway: String?, eventHomeFinalResult: String?, eventAwayFinalResult: String?, eventHomeRr: JSONNull?, eventAwayRr: JSONNull?, eventStatus: EventStatus?, eventStatusInfo: String?, countryName: CountryName?, leagueName: LeagueName?, leagueKey: Int?, leagueRound: String?, leagueSeason: String?, eventLive: String?, eventType: EventType?, eventToss: String?, eventManOfMatch: String?, eventStadium: EventStadium?, eventHomeTeamLogo: String?, eventAwayTeamLogo: String?, scorecard: ScorecardUnion?, comments: Comments?, wickets: Wickets?, extra: ExtraUnion?, lineups: Lineups?) {
             self.eventKey = eventKey
             self.eventDateStart = eventDateStart
             self.eventDateStop = eventDateStop
@@ -167,20 +165,26 @@ class CricketLatestResponse{
     }
 
     enum Innings: String, Codable {
-        case bagmatiProvinceUnder19S1INN = "Bagmati Province Under-19s 1 INN"
-        case bagmatiProvinceUnder19S2INN = "Bagmati Province Under-19s 2 INN"
-        case gandakiProvinceUnder19S1INN = "Gandaki Province Under-19s 1 INN"
-        case gandakiProvinceUnder19S2INN = "Gandaki Province Under-19s 2 INN"
-        case karnaliProvinceUnder19S1INN = "Karnali Province Under-19s 1 INN"
-        case karnaliProvinceUnder19S2INN = "Karnali Province Under-19s 2 INN"
-        case lumbiniProvinceUnder19S1INN = "Lumbini Province Under-19s 1 INN"
-        case lumbiniProvinceUnder19S2INN = "Lumbini Province Under-19s 2 INN"
-        case madheshProvinceUnder19S1INN = "Madhesh Province Under-19s 1 INN"
-        case madheshProvinceUnder19S2INN = "Madhesh Province Under-19s 2 INN"
-        case provinceNumber1Under19S1INN = "Province Number 1 Under-19s 1 INN"
-        case provinceNumber1Under19S2INN = "Province Number 1 Under-19s 2 INN"
-        case sudurPaschimProvinceUnder19S1INN = "Sudur Paschim Province Under-19s 1 INN"
-        case sudurPaschimProvinceUnder19S2INN = "Sudur Paschim Province Under-19s 2 INN"
+        case bahrain1INN = "Bahrain 1 INN"
+        case hongKong1INN = "Hong Kong 1 INN"
+        case hongKong2INN = "Hong Kong 2 INN"
+        case kuwait1INN = "Kuwait 1 INN"
+        case kuwait2INN = "Kuwait 2 INN"
+        case live = "Live"
+        case malaysia1INN = "Malaysia 1 INN"
+        case malaysia2INN = "Malaysia 2 INN"
+        case nepal1INN = "Nepal 1 INN"
+        case nepal2INN = "Nepal 2 INN"
+        case oman1INN = "Oman 1 INN"
+        case oman2INN = "Oman 2 INN"
+        case qatar1INN = "Qatar 1 INN"
+        case qatar2INN = "Qatar 2 INN"
+        case saudiArabia1INN = "Saudi Arabia 1 INN"
+        case saudiArabia2INN = "Saudi Arabia 2 INN"
+        case singapore1INN = "Singapore 1 INN"
+        case singapore2INN = "Singapore 2 INN"
+        case unitedArabEmirates1INN = "United Arab Emirates 1 INN"
+        case unitedArabEmirates2INN = "United Arab Emirates 2 INN"
     }
 
     enum CountryName: String, Codable {
@@ -189,9 +193,8 @@ class CricketLatestResponse{
 
     enum EventServiceHome: String, Codable {
         case empty = ""
-        case the28445Ov = "28.4/45 ov"
-        case the31345Ov = "31.3/45 ov"
-        case the36340Ov = "36.3/40 ov"
+        case the3535Ov = "35/35 ov"
+        case the4242Ov = "42/42 ov"
     }
 
     enum EventStadium: String, Codable {
@@ -200,12 +203,16 @@ class CricketLatestResponse{
     }
 
     enum EventStatus: String, Codable {
+        case abandoned = "Abandoned"
+        case cancelled = "Cancelled"
         case empty = ""
         case finished = "Finished"
     }
 
     enum EventTime: String, Codable {
-        case the0415 = "04:15"
+        case the0500 = "05:00"
+        case the0515 = "05:15"
+        case the0545 = "05:45"
     }
 
     enum EventType: String, Codable {
@@ -266,11 +273,7 @@ class CricketLatestResponse{
     }
 
     enum LeagueName: String, Codable {
-        case canUnder19SNationalSelectionTournament = "CAN Under-19s National Selection Tournament"
-    }
-
-    enum LeagueSeason: String, Codable {
-        case the202223 = "2022/23"
+        case accMenSPremierCup = "ACC Men's Premier Cup"
     }
 
     // MARK: - Lineups
@@ -676,5 +679,4 @@ class CricketLatestResponse{
             }
         }
     }
-
 }

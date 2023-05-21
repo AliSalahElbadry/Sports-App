@@ -9,9 +9,9 @@ import Foundation
 import Alamofire
 protocol PCricketNetworkManager{
     func fetchLeagues(complition:@escaping (CricketLeaguesWelcome?) -> Void)
-    func fetchEvents(leagueId:String, complition:@escaping (CricketEvents.Welcome?) -> Void)
+    func fetchEvents(mode:Int,leagueId:String, complition:@escaping (CricketEvents.Welcome?) -> Void)
     func fetchTeamDetails(teamId:String, complition:@escaping (CricketTeamDetails.Welcome?) -> Void)
-    func fetchLatestEvents(leagueId: String, complition:@escaping (CricketLatestResponse.Welcome?) -> Void)
+    
 }
 class CricketNetworkManager : PCricketNetworkManager{
     
@@ -38,35 +38,19 @@ class CricketNetworkManager : PCricketNetworkManager{
         }
     }
     
-    func fetchEvents(leagueId: String, complition:@escaping (CricketEvents.Welcome?) -> Void) {
-        let url  =  urls.CricketUpcomingEvents(leagueKey: leagueId)
-        
-        AF.request(url ).response
+    func fetchEvents(mode:Int,leagueId: String, complition:@escaping (CricketEvents.Welcome?) -> Void) {
+        var url :String?
+        if(mode==0){
+            url  =  urls.CricketUpcomingEvents(leagueKey: leagueId)
+        }else if(mode==1)
+        {
+            url = urls.CricketLatestEvents(leagueKey: leagueId)
+        }
+        AF.request(url!,method: .get ).response
         { response in
             if let data = response.data {
                 do{
                     let result = try JSONDecoder().decode(CricketEvents.Welcome.self, from: data)
-                    DispatchQueue.main.async {
-                        complition(result)
-                    }
-                }
-                catch{
-                    complition(nil)
-                }
-            } else {
-                complition(nil)
-            }
-        }
-    }
-    func fetchLatestEvents(leagueId: String, complition:@escaping (CricketLatestResponse.Welcome?) -> Void) {
-        let url = urls.CricketLatestEvents(leagueKey: leagueId)
-            
-        
-        AF.request(url ).response
-        { response in
-            if let data = response.data {
-                do{
-                    let result = try JSONDecoder().decode(CricketLatestResponse.Welcome.self, from: data)
                     DispatchQueue.main.async {
                         complition(result)
                     }

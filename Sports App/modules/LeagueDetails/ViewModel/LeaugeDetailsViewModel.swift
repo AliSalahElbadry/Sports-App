@@ -13,9 +13,9 @@ struct Events{
     var cricketUpcomingEvents:[CricketEvents.Result]?
     var tennisUpcomingEvents:[TennisEvents.Result]?
     
-    var footLatestEvents:[FootLatestResponse.Result]?
+    var footLatestEvents:[FootballEvents.Result]?
     var basketLatestEvents:[BasketballEvents.Result]?
-    var cricketLatestEvents:[CricketLatestResponse.Result]?
+    var cricketLatestEvents:[CricketEvents.Result]?
     var tennisLatestEvents:[TennisEvents.Result]?
 }
 struct Team:Hashable{
@@ -27,21 +27,20 @@ struct Team:Hashable{
 class LeaugeDetailsViewModel{
     var teams:Array<Team>?
     var events:Events?
+    var refrishUserInterface :()->()={}
     private var footNetworkManager:PFootballNetworkManager?
     private var basketNetworkManager:PBasketballNetworkManager?
     private var cricketNetworkManager:PCricketNetworkManager?
     private var tennisNetworkManager:PTennisNetworkManager?
     private let league:League
     private var dbManager:PDBManager?
-    private let leagueDetailsViewController:PLeagueDetailsViewController
-    init(footNetworkManager: PFootballNetworkManager? = nil, basketNetworkManager: PBasketballNetworkManager? = nil, cricketNetworkManager: PCricketNetworkManager? = nil, tennisNetworkManager: PTennisNetworkManager? = nil, league: League, dbManager: PDBManager? = nil, leagueDetailsViewController: PLeagueDetailsViewController) {
+    init(footNetworkManager: PFootballNetworkManager? = nil, basketNetworkManager: PBasketballNetworkManager? = nil, cricketNetworkManager: PCricketNetworkManager? = nil, tennisNetworkManager: PTennisNetworkManager? = nil, league: League, dbManager: PDBManager? = nil) {
         self.footNetworkManager = footNetworkManager
         self.basketNetworkManager = basketNetworkManager
         self.cricketNetworkManager = cricketNetworkManager
         self.tennisNetworkManager = tennisNetworkManager
         self.league = league
         self.dbManager = dbManager
-        self.leagueDetailsViewController = leagueDetailsViewController
         teams = []
         events = Events()
     }
@@ -52,26 +51,26 @@ class LeaugeDetailsViewModel{
     private func fetchUpcomingEvents(){
         if(league.sport == "football"){
             events?.footUpComingEvents = []
-            footNetworkManager?.fetchEvents( leagueId: league.id!, complition: { it in
+            footNetworkManager?.fetchEvents( mode: 0,leagueId: league.id!, complition: { it in
                 self.events?.footUpComingEvents = it?.result
-                
+               
                 self.fetchLatestEvents()
             })
         }else if( league.sport == "basketball"){
             events?.basketUpcomingEvents = []
-            basketNetworkManager?.fetchEvents( leagueId: league.id!, complition: { it in
+            basketNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
                 self.events?.basketUpcomingEvents = it?.result
                 self.fetchLatestEvents()
             })
         }else if(league.sport == "cricket"){
             events?.cricketUpcomingEvents = []
-            cricketNetworkManager?.fetchEvents(leagueId: league.id!, complition: { it in
+            cricketNetworkManager?.fetchEvents(mode: 0,leagueId: league.id!, complition: { it in
                 self.events?.cricketUpcomingEvents = it?.result
                 self.fetchLatestEvents()
             })
         }else if (league.sport == "tennis"){
             events?.tennisUpcomingEvents = []
-            tennisNetworkManager?.fetchEvents( leagueId: league.id!, complition: { it in
+            tennisNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
                 self.events?.tennisUpcomingEvents = it?.result
                 self.fetchLatestEvents()
             })
@@ -80,25 +79,25 @@ class LeaugeDetailsViewModel{
     private func fetchLatestEvents(){
         if(league.sport == "football"){
             events?.footLatestEvents = []
-            footNetworkManager?.fetchLatestEvents( leagueId: league.id!, complition: { it in
+            footNetworkManager?.fetchEvents(mode:1, leagueId: league.id!, complition: { it in
                 self.events?.footLatestEvents = it?.result
                 self.prepareTeams()
             })
         }else if( league.sport == "basketball"){
             events?.basketLatestEvents = []
-            basketNetworkManager?.fetchLatestEvents(leagueId: league.id!, complition: { it in
+            basketNetworkManager?.fetchEvents(mode:1,leagueId: league.id!, complition: { it in
                 self.events?.basketLatestEvents = it?.result
                 self.prepareTeams()
             })
         }else if(league.sport == "cricket"){
             events?.cricketLatestEvents = []
-            cricketNetworkManager?.fetchLatestEvents(leagueId: league.id!, complition: { it in
+            cricketNetworkManager?.fetchEvents(mode:1,leagueId: league.id!, complition: { it in
                 self.events?.cricketLatestEvents = it?.result
                 self.prepareTeams()
             })
         }else if (league.sport == "tennis"){
             events?.tennisLatestEvents = []
-            tennisNetworkManager?.fetchLatestEvents(leagueId: league.id!, complition: { it in
+            tennisNetworkManager?.fetchEvents(mode:1,leagueId: league.id!, complition: { it in
                 self.events?.tennisLatestEvents = it?.result
                 self.prepareTeams()
             })
@@ -151,7 +150,7 @@ class LeaugeDetailsViewModel{
             })
             teams  = Array(tennisTeams)
         }
-        leagueDetailsViewController.refrishUserInterface()
+        refrishUserInterface()
     }
     func addToFavorite(){
         dbManager?.saveNewFavorite(league: league)

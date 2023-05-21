@@ -9,23 +9,22 @@ import Foundation
 
 class FavoritesViewModel{
     var favorites : Array<League>?
+    var showFavorites : ()->()={}
     let dbManager:PDBManager
-    let favoritesLeaguesProtocol :FavoritesLeaguesProtocol
-    init(dbManager: PDBManager, favoritesLeaguesProtocol:FavoritesLeaguesProtocol) {
+    init(dbManager: PDBManager) {
         self.dbManager = dbManager
-        self.favoritesLeaguesProtocol = favoritesLeaguesProtocol
         favorites = []
     }
     func saveNewFavorite(league: League) {
         favorites?.append(league)
         dbManager.saveNewFavorite(league: league)
-        favoritesLeaguesProtocol.showFavorites()
+        showFavorites()
     }
     
     func deleteFavorite(leagueId:Int) {
         dbManager.deleteFavorite(leagueId: self.favorites?[leagueId].id ?? "", sportName: self.favorites?[leagueId].sport ?? "")
         self.favorites?.remove(at: leagueId)
-        favoritesLeaguesProtocol.showFavorites()
+       showFavorites()
     }
     func getAllFavoriteLeagues() {
         self.favorites = []
@@ -39,6 +38,6 @@ class FavoritesViewModel{
             favorite.url = it.value(forKey: "url") as? String
             self.favorites?.append(favorite)
         })
-        favoritesLeaguesProtocol.showFavorites()
+        showFavorites()
     }
 }
