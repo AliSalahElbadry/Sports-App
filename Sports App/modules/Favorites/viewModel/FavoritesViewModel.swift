@@ -15,11 +15,7 @@ class FavoritesViewModel{
         self.dbManager = dbManager
         favorites = []
     }
-    func saveNewFavorite(league: League) {
-        favorites?.append(league)
-        dbManager.saveNewFavorite(league: league)
-        showFavorites()
-    }
+  
     
     func deleteFavorite(leagueId:Int) {
         dbManager.deleteFavorite(leagueId: self.favorites?[leagueId].id ?? "", sportName: self.favorites?[leagueId].sport ?? "")

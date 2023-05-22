@@ -32,7 +32,9 @@ class SportsViewController: UIViewController,UICollectionViewDelegate,UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sportCell", for: indexPath) as! SportCollectionViewCell
         let sport = sportsArr[indexPath.row]
         cell.setCell(name: sport.sportName, photo: sport.sportPhoto)
-        
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.layer.cornerRadius = 20
         return cell
     }
     

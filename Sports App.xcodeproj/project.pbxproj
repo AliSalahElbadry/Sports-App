@@ -27,7 +27,6 @@
 		0470CAEA2A1641EE007B205F /* TeamDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CAE92A1641EE007B205F /* TeamDetailsViewController.swift */; };
 		0470CAEE2A16493A007B205F /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CAED2A16493A007B205F /* FavoritesTableViewController.swift */; };
 		0470CAF12A164952007B205F /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CAEF2A164952007B205F /* FavoritesTableViewCell.swift */; };
-		0470CAF22A164952007B205F /* FavoritesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0470CAF02A164952007B205F /* FavoritesTableViewCell.xib */; };
 		0470CAF52A16496B007B205F /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CAF42A16496B007B205F /* FavoritesViewModel.swift */; };
 		0470CAF92A164A09007B205F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CAF82A164A09007B205F /* SplashViewController.swift */; };
 		0470CAFB2A164B24007B205F /* SplashTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0470CAFA2A164B24007B205F /* SplashTabBarController.swift */; };
@@ -99,7 +98,6 @@
 		0470CAE92A1641EE007B205F /* TeamDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsViewController.swift; sourceTree = "<group>"; };
 		0470CAED2A16493A007B205F /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
 		0470CAEF2A164952007B205F /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
-		0470CAF02A164952007B205F /* FavoritesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoritesTableViewCell.xib; sourceTree = "<group>"; };
 		0470CAF42A16496B007B205F /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		0470CAF82A164A09007B205F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		0470CAFA2A164B24007B205F /* SplashTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashTabBarController.swift; sourceTree = "<group>"; };
@@ -308,7 +306,6 @@
 			children = (
 				0470CAED2A16493A007B205F /* FavoritesTableViewController.swift */,
 				0470CAEF2A164952007B205F /* FavoritesTableViewCell.swift */,
-				0470CAF02A164952007B205F /* FavoritesTableViewCell.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -544,7 +541,6 @@
 			files = (
 				047035E12A152470005DA071 /* LaunchScreen.storyboard in Resources */,
 				04627F3E2A17D4FB00A38D32 /* anim.json in Resources */,
-				0470CAF22A164952007B205F /* FavoritesTableViewCell.xib in Resources */,
 				04627F402A17D5FE00A38D32 /* Assets.xcassets in Resources */,
 				047035D92A15246D005DA071 /* Main.storyboard in Resources */,
 			);

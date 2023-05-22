@@ -14,7 +14,7 @@ class DBManager : PDBManager{
     func saveNewFavorite(league: League) {
         let appdelegate=UIApplication.shared.delegate as! AppDelegate
         let manager:NSManagedObjectContext=appdelegate.persistentContainer.viewContext
-        let entity=NSEntityDescription.entity(forEntityName: "FavoriteLeagues", in:manager)!
+        let entity=NSEntityDescription.entity(forEntityName: "FavoriteLeagueTable", in:manager)!
         let favoriteLeague=NSManagedObject(entity: entity, insertInto: manager)
         favoriteLeague.setValue(league.id, forKey: "id")
         favoriteLeague.setValue(league.name, forKey: "name")
@@ -31,9 +31,9 @@ class DBManager : PDBManager{
     func deleteFavorite(leagueId: String, sportName: String) {
         let appdelegate=UIApplication.shared.delegate as! AppDelegate
         let manager:NSManagedObjectContext=appdelegate.persistentContainer.viewContext
-        let fetchRequest=NSFetchRequest<NSManagedObject>(entityName: "FavoriteLeagues")
+        let fetchRequest=NSFetchRequest<NSManagedObject>(entityName: "FavoriteLeagueTable")
         do{
-            var favLeagues=try manager.fetch(fetchRequest)
+            let favLeagues=try manager.fetch(fetchRequest)
             favLeagues.forEach({it in
                 if it.value(forKey: "id") as! String==leagueId{
                     if it.value(forKey: "sport") as! String==sportName{
@@ -42,26 +42,27 @@ class DBManager : PDBManager{
                 }
             })
             try manager.save()
-        }catch let e{
-            print(e.localizedDescription)
+        }catch {
+            return
         }
     }
     func isFavorite(leagueId: String, sportName: String)->Bool {
         var isFav:Bool = false
         let appdelegate=UIApplication.shared.delegate as! AppDelegate
         let manager:NSManagedObjectContext=appdelegate.persistentContainer.viewContext
-        let fetchRequest=NSFetchRequest<NSManagedObject>(entityName: "FavoriteLeagues")
+        let fetchRequest=NSFetchRequest<NSManagedObject>(entityName: "FavoriteLeagueTable")
         do{
-            var favLeagues=try manager.fetch(fetchRequest)
+            let favLeagues=try manager.fetch(fetchRequest)
+            
             favLeagues.forEach({it in
-                if it.value(forKey: "id") as! String==leagueId{
-                    if it.value(forKey: "sport") as! String==sportName{
-                       isFav = true
+                    if it.value(forKey: "id") as! String==leagueId{
+                        if it.value(forKey: "sport") as! String==sportName{
+                            isFav = true
+                        }
                     }
-                }
-            })
-        }catch let e{
-            print(e.localizedDescription)
+                })
+        }catch {
+            return false
         }
         return isFav
     }
@@ -69,11 +70,11 @@ class DBManager : PDBManager{
         var favLeagues:Array<NSManagedObject>?
         let appdelegate=UIApplication.shared.delegate as! AppDelegate
         let manager:NSManagedObjectContext=appdelegate.persistentContainer.viewContext
-        let fetchRequest=NSFetchRequest<NSManagedObject>(entityName: "FavoriteLeagues")
+        let fetchRequest=NSFetchRequest<NSManagedObject>(entityName: "FavoriteLeagueTable")
         do{
             favLeagues=try manager.fetch(fetchRequest)
-        }catch let e{
-            print(e.localizedDescription)
+        }catch {
+            print(error)
         }
         return favLeagues
     }

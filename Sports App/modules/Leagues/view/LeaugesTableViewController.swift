@@ -76,6 +76,7 @@ class LeaugesViewController: UIViewController , UITableViewDelegate, UITableView
                 let url = URL(string: str!)
                 cell.leagueImg.kf.setImage(with: url)
                 
+                
             }else{
                 cell.leagueImg.image = UIImage(named: "football")
             }
@@ -98,8 +99,11 @@ class LeaugesViewController: UIViewController , UITableViewDelegate, UITableView
     }
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let leagueDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
-        leagueDetailsPage.league = viewModel?.leagues?[indexPath.row]
-        leagueDetailsPage.modalTransitionStyle = .crossDissolve
+        let league = viewModel?.leagues?[indexPath.row]
+        let image = (tableView.cellForRow(at: indexPath) as! LeagueTableViewCell).leagueImg.image
+         league?.image = image?.jpegData(compressionQuality : 1)?.base64EncodedString() ?? ""
+         leagueDetailsPage.league = league
+         leagueDetailsPage.modalTransitionStyle = .crossDissolve
         leagueDetailsPage.modalPresentationStyle = .fullScreen
         self.present(leagueDetailsPage, animated: true)
     }

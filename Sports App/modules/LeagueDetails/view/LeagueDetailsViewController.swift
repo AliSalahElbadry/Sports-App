@@ -13,6 +13,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
     @IBOutlet weak var teamsCell: UICollectionView!
     
     @IBOutlet weak var upComingCell: UICollectionView!
+    @IBOutlet weak var favoriteBtn: UIBarButtonItem!
     
     @IBOutlet weak var latestResultsCell: UICollectionView!
     
@@ -20,6 +21,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
     var activityIndicator = UIActivityIndicatorView(style: .large)
     private var viewModel : LeaugeDetailsViewModel?
     var league:League?
+    var isFavorite:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator = UIActivityIndicatorView(style: .large)
@@ -34,6 +36,11 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
             self.latestResultsCell.reloadData()
             self.teamsCell.reloadData()
         }
+        viewModel?.isItFavorite = { it in
+            self.isFavorite = it
+            self.refrishFavorite()
+        }
+        viewModel?.isFavorite()
         viewModel?.prepareLeageDetails()
         
         teamsCell.dataSource = self
@@ -43,10 +50,32 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
         latestResultsCell.delegate = self
         latestResultsCell.dataSource = self
     }
+    func refrishFavorite(){
+        if(isFavorite == true)
+        {
+            favoriteBtn.image = UIImage(systemName: "heart.fill")
+            
+        }else if(isFavorite == false)
+        {
+            favoriteBtn.image = UIImage(systemName: "heart")
+        }
+    }
     @IBAction func backBtnClicked(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
     }
     @IBAction func favoriteAction(_ sender: UIBarButtonItem) {
+        if( isFavorite == true)
+        {
+            isFavorite = false
+            refrishFavorite()
+            viewModel?.removeFromFavorite()
+            
+        }else if( isFavorite == false)
+        {
+            isFavorite = true
+            refrishFavorite()
+            viewModel?.addToFavorite()
+        }
     }
     
     

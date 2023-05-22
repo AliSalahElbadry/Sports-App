@@ -8,84 +8,91 @@
 import UIKit
 
 
-class FavoritesTableViewController: UITableViewController {
+class FavoritesTableViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView!
     var favoriteViewModel : FavoritesViewModel?
     
      
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         favoriteViewModel = FavoriteDependancyFactory.viewModel()
         favoriteViewModel?.showFavorites = {
             self.tableView.reloadData()
         }
+        favoriteViewModel?.getAllFavoriteLeagues()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        favoriteViewModel?.getAllFavoriteLeagues()
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return favoriteViewModel?.favorites?.count ?? 0
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesTableViewCell") as! FavoritesTableViewCell
+        cell.leagueName.text = favoriteViewModel?.favorites?[indexPath.row].name
+         if let txt = favoriteViewModel?.favorites?[indexPath.row].sport {
+             var result = ""
+             if( txt == "football")
+             {
+                 result = "Football"
+             }else if(txt == "basketBall")
+             {
+                 result = "BasketBall"
+             }else if (txt == "cricket")
+             {
+                 result = "Cricket"
+             }else{
+                 result = "Tennis"
+             }
+             cell.leagueSport.text = result
+             
+         }
+        cell.leagueImage.image = convertStringToImage(string: favoriteViewModel?.favorites?[indexPath.row].image ?? "")
+        cell.contentView.layer.borderColor = UIColor.darkGray.cgColor
+        cell.contentView.layer.borderWidth = 1
+        cell.contentView.layer.cornerRadius = 20
+        cell.contentView.layer.masksToBounds = true
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func convertStringToImage(string:String)->UIImage{
+        let imageData = Data(base64Encoded: string)
+        let image = UIImage(data: imageData!)
+        return image!
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal,
+                                        title: "Delete") { [weak self] (action, view, completionHandler) in
+            self?.handleDeleteFavourite(index: indexPath.row)
+                                            completionHandler(true)
+        }
+        action.backgroundColor = .systemRed
+        return UISwipeActionsConfiguration(actions: [action])
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    func tableView(_ tableView: UITableView,
+                   editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    func handleDeleteFavourite(index:Int){
+        favoriteViewModel?.deleteFavorite(leagueId: index)
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let leagueDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
+        leagueDetailsPage.league = favoriteViewModel?.favorites?[indexPath.row]
+        leagueDetailsPage.modalTransitionStyle = .crossDissolve
+       leagueDetailsPage.modalPresentationStyle = .fullScreen
+       self.present(leagueDetailsPage, animated: true)
     }
-    */
-
 }

@@ -28,11 +28,12 @@ class LeaugeDetailsViewModel{
     var teams:Array<Team>?
     var events:Events?
     var refrishUserInterface :()->()={}
+    var isItFavorite :(Bool)->() = {_ in }
     private var footNetworkManager:PFootballNetworkManager?
     private var basketNetworkManager:PBasketballNetworkManager?
     private var cricketNetworkManager:PCricketNetworkManager?
     private var tennisNetworkManager:PTennisNetworkManager?
-    private let league:League
+            var league:League
     private var dbManager:PDBManager?
     init(footNetworkManager: PFootballNetworkManager? = nil, basketNetworkManager: PBasketballNetworkManager? = nil, cricketNetworkManager: PCricketNetworkManager? = nil, tennisNetworkManager: PTennisNetworkManager? = nil, league: League, dbManager: PDBManager? = nil) {
         self.footNetworkManager = footNetworkManager
@@ -153,12 +154,13 @@ class LeaugeDetailsViewModel{
         refrishUserInterface()
     }
     func addToFavorite(){
-        dbManager?.saveNewFavorite(league: league)
+        self.dbManager?.saveNewFavorite(league: self.league)
     }
     func removeFromFavorite(){
         dbManager?.deleteFavorite(leagueId: league.id!, sportName: league.sport!)
     }
-    func isFavorite()->Bool{
-        return dbManager?.isFavorite(leagueId: league.id!, sportName: league.sport!) ?? false
+    func isFavorite(){
+        
+       isItFavorite(dbManager?.isFavorite(leagueId: league.id!, sportName: league.sport!) ?? false)
     }
 }

@@ -25,9 +25,6 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
         activityIndicator.startAnimating()
         playersTable.delegate = self
         playersTable.dataSource = self
-        teamName.layer.cornerRadius = 20.0
-        teamName.layer.borderWidth = 0.5
-        teamName.layer.borderColor = UIColor.red.cgColor
         teamName.text = team?.name
         teamImg.kf.setImage(with: URL(string:team?.image ?? ""))
         viewModel = TeamDetailsViewModelDependancyFactory.viewModel(sportName: league?.sport ?? "", teamId: String(team?.teamKey ?? 0))
@@ -58,15 +55,25 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
         
         cell.contentView.layer.cornerRadius = 20
         cell.contentView.layer.masksToBounds = true
+        cell.contentView.layer.borderColor = UIColor.darkGray.cgColor
+        cell.contentView.layer.borderWidth = 0.3
+        cell.contentView.layer.cornerRadius = 20
+        cell.clipsToBounds = true
         if( league?.sport == "football")
         {
             let player =  viewModel?.footTeam?.players?[indexPath.row]
             cell.playerName.text = player?.playerName ?? "Unknown"
             cell.playerNumber.text = player?.playerNumber ?? "Unknown"
+            cell.playerImg.layer.cornerRadius = 25
+            cell.playerImg.layer.masksToBounds = true
+            cell.playerImg.clipsToBounds = true
             
             let string = player?.playerImage
-            cell.playerImg.kf.setImage(with: URL(string: string ?? "https://www.pngkit.com/png/full/365-3654764_cristiano-ronaldo-icon-soccer-player-icon.png"))
-           
+            if let s = string{
+                cell.playerImg.kf.setImage(with: URL(string: s))
+            }else{
+                cell.playerImg.image = UIImage(named: "soccer-player")
+            }
         }else if( league?.sport == "tennis")
         {
             let player =  viewModel?.tennisTeam
@@ -74,7 +81,11 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
             cell.playerNumber.text = player?.playerBday ?? "Unknown"
             
             let string = player?.playerLogo
-            cell.playerImg.kf.setImage(with: URL(string: string ?? "https://www.pngkit.com/png/full/365-3654764_cristiano-ronaldo-icon-soccer-player-icon.png"))
+            if let s = string{
+                cell.playerImg.kf.setImage(with: URL(string: s))
+            }else{
+                cell.playerImg.image = UIImage(named: "soccer-player")
+            }
         }
         
         return cell
