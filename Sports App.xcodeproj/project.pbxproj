@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044E1CC02A1BFB9D0087527E /* Retchability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E1CBF2A1BFB9D0087527E /* Retchability.swift */; };
 		04627F282A174AC400A38D32 /* FavoriteDependancyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04627F272A174AC400A38D32 /* FavoriteDependancyFactory.swift */; };
 		04627F2C2A17502400A38D32 /* LeaguesDependancyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04627F2B2A17502400A38D32 /* LeaguesDependancyFactory.swift */; };
 		04627F2E2A1756C000A38D32 /* League.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04627F2D2A1756C000A38D32 /* League.swift */; };
@@ -76,6 +77,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		044E1CBF2A1BFB9D0087527E /* Retchability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Retchability.swift; sourceTree = "<group>"; };
 		04627F272A174AC400A38D32 /* FavoriteDependancyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDependancyFactory.swift; sourceTree = "<group>"; };
 		04627F2B2A17502400A38D32 /* LeaguesDependancyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesDependancyFactory.swift; sourceTree = "<group>"; };
 		04627F2D2A1756C000A38D32 /* League.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = League.swift; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 				04D8F8CB2A15343400E46036 /* Alerts.swift */,
 				04D8F8CD2A15344400E46036 /* Constants.swift */,
 				04CEEEAC2A1669E900570A98 /* URLs.swift */,
+				044E1CBF2A1BFB9D0087527E /* Retchability.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				04CEEEED2A16A36200570A98 /* BasketballEvents.swift in Sources */,
 				0470CAF12A164952007B205F /* FavoritesTableViewCell.swift in Sources */,
 				04CEEEBA2A16932400570A98 /* FootballLeagues.swift in Sources */,
+				044E1CC02A1BFB9D0087527E /* Retchability.swift in Sources */,
 				04D8F8D02A153BBE00E46036 /* SportsViewController.swift in Sources */,
 				04CEEF742A16BC9E00570A98 /* BasketballNetworkManager.swift in Sources */,
 				04D8F8CC2A15343400E46036 /* Alerts.swift in Sources */,

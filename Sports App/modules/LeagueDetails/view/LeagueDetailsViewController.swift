@@ -24,31 +24,37 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
     var isFavorite:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.center = view.center
-        activityIndicator.startAnimating()
-        view.addSubview(activityIndicator)
-        viewModel = LeagueDetailsDependancyFactory.viewModel(league: self.league!)
-        viewModel?.refrishUserInterface = {
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.isHidden = true
-            self.upComingCell.reloadData()
-            self.latestResultsCell.reloadData()
-            self.teamsCell.reloadData()
+        if Network.reachability.isConnectedToNetwork == true{
+            activityIndicator = UIActivityIndicatorView(style: .large)
+            activityIndicator.center = view.center
+            activityIndicator.startAnimating()
+            view.addSubview(activityIndicator)
+            viewModel = LeagueDetailsDependancyFactory.viewModel(league: self.league!)
+            viewModel?.refrishUserInterface = {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                self.upComingCell.reloadData()
+                self.latestResultsCell.reloadData()
+                self.teamsCell.reloadData()
+            }
+            viewModel?.isItFavorite = { it in
+                self.isFavorite = it
+                self.refrishFavorite()
+            }
+            viewModel?.isFavorite()
+            viewModel?.prepareLeageDetails()
+            
+            teamsCell.dataSource = self
+            teamsCell.delegate = self
+            upComingCell.delegate = self
+            upComingCell.dataSource = self
+            latestResultsCell.delegate = self
+            latestResultsCell.dataSource = self
+        }else{
+            Alerts().showAlert(msg: "Please Check Your Network Connection",complitionHandeler: {
+                self.dismiss(animated: true)
+            })
         }
-        viewModel?.isItFavorite = { it in
-            self.isFavorite = it
-            self.refrishFavorite()
-        }
-        viewModel?.isFavorite()
-        viewModel?.prepareLeageDetails()
-        
-        teamsCell.dataSource = self
-        teamsCell.delegate = self
-        upComingCell.delegate = self
-        upComingCell.dataSource = self
-        latestResultsCell.delegate = self
-        latestResultsCell.dataSource = self
     }
     func refrishFavorite(){
         if(isFavorite == true)
@@ -237,12 +243,16 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == teamsCell {
-            let teamDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
-            teamDetailsPage.league = self.league
-            teamDetailsPage.team = viewModel?.teams?[indexPath.row]
-            teamDetailsPage.modalTransitionStyle = .crossDissolve
-            teamDetailsPage.modalPresentationStyle = .fullScreen
-            self.present(teamDetailsPage, animated: true)
+            if Network.reachability.isConnectedToNetwork == true{
+                let teamDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "TeamDetailsViewController") as! TeamDetailsViewController
+                teamDetailsPage.league = self.league
+                teamDetailsPage.team = viewModel?.teams?[indexPath.row]
+                teamDetailsPage.modalTransitionStyle = .crossDissolve
+                teamDetailsPage.modalPresentationStyle = .fullScreen
+                self.present(teamDetailsPage, animated: true)
+            }else{
+                Alerts().showAlert(msg: "Connection Error !!")
+            }
         }
     }
 }

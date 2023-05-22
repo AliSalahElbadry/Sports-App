@@ -86,13 +86,30 @@ class FavoritesTableViewController: UIViewController ,UITableViewDelegate, UITab
         return .none
     }
     func handleDeleteFavourite(index:Int){
-        favoriteViewModel?.deleteFavorite(leagueId: index)
+        let alert = UIAlertController(title: "Alert", message: "remove this league from favorites ", preferredStyle: UIAlertController.Style.alert)
+        let yesAction = UIAlertAction(title: "yes", style: .default) { it in
+            
+            self.favoriteViewModel?.deleteFavorite(leagueId: index)
+            alert.dismiss(animated: true)
+            
+        }
+        let noAction = UIAlertAction(title: "no", style: .default) { it in
+            alert.dismiss(animated: true)
+        }
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        alert.present(animated: true, completion: {
+        })
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let leagueDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
-        leagueDetailsPage.league = favoriteViewModel?.favorites?[indexPath.row]
-        leagueDetailsPage.modalTransitionStyle = .crossDissolve
-       leagueDetailsPage.modalPresentationStyle = .fullScreen
-       self.present(leagueDetailsPage, animated: true)
+        if Network.reachability.isConnectedToNetwork == true{
+            let leagueDetailsPage = self.storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
+            leagueDetailsPage.league = favoriteViewModel?.favorites?[indexPath.row]
+            leagueDetailsPage.modalTransitionStyle = .crossDissolve
+            leagueDetailsPage.modalPresentationStyle = .fullScreen
+            self.present(leagueDetailsPage, animated: true)
+        }else{
+            Alerts().showAlert(msg: "You Are Offline !!")
+        }
     }
 }

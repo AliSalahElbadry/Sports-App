@@ -54,26 +54,31 @@ class SportsViewController: UIViewController,UICollectionViewDelegate,UICollecti
     }
     
     
-     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let leaugesPage = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesViewController") as! LeaugesViewController
-        leaugesPage.modalTransitionStyle = .crossDissolve
-         leaugesPage.modalPresentationStyle = .fullScreen
-        switch (indexPath.row){
-        case 0 :
-            leaugesPage.sportName="football"
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if Network.reachability.isConnectedToNetwork == true{
+            let leaugesPage = self.storyboard?.instantiateViewController(withIdentifier: "LeaguesViewController") as! LeaugesViewController
+            leaugesPage.modalTransitionStyle = .crossDissolve
+            leaugesPage.modalPresentationStyle = .fullScreen
+            switch (indexPath.row){
+            case 0 :
+                leaugesPage.sportName="football"
+                
+                break
+            case 1:
+                leaugesPage.sportName="basketball"
+                break
+            case 2:
+                leaugesPage.sportName="cricket"
+                break
+            default :
+                leaugesPage.sportName="tennis"
+                break
+            }
+            self.present(leaugesPage, animated: true)
+        }else{
+            Alerts().showAlert(msg: "Please Check Your Network Connection !")
             
-            break
-        case 1:
-            leaugesPage.sportName="basketball"
-            break
-        case 2:
-            leaugesPage.sportName="cricket"
-            break
-        default :
-            leaugesPage.sportName="tennis"
-            break
         }
-        self.present(leaugesPage, animated: true)
     }
     
   

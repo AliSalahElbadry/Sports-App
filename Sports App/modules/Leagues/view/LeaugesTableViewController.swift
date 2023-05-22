@@ -31,8 +31,13 @@ class LeaugesViewController: UIViewController , UITableViewDelegate, UITableView
             self.activityIndicator.isHidden = true
             self.tableView.reloadData()
         }
-        viewModel?.getLeagues()
-        
+        if Network.reachability.isConnectedToNetwork == true{
+            viewModel?.getLeagues()
+        }else{
+            Alerts().showAlert(msg: "Opps !! No Network Connection",complitionHandeler: {
+                self.dismiss(animated: true)
+            })
+        }
         if(sportName == "football"){
             self.title = "Football leagues"
         }else if(sportName == "basketball"){

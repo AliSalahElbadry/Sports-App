@@ -16,13 +16,21 @@ class Alerts{
         }
         return instance!
     }
-    private func showAlert(msg:String){
+     func showAlert(msg:String){
         let alert = UIAlertController(title: "Alert", message: msg, preferredStyle: UIAlertController.Style.alert)
+         let okAction = UIAlertAction(title: "OK", style: .default) { it in
+             alert.dismiss(animated: true)
+         }
+         alert.addAction(okAction)
         alert.present(animated: true, completion: nil)
     }
-    private func showAlert(msg:String,complitionHandeler:(() -> Void)?)
+     func showAlert(msg:String,complitionHandeler:(() -> Void)?)
     {
         let alert = UIAlertController(title: "Alert", message: msg, preferredStyle: UIAlertController.Style.alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { it in
+            alert.dismiss(animated: true)
+        }
+        alert.addAction(okAction)
         alert.present(animated: true, completion: complitionHandeler)
     }
 }

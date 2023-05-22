@@ -20,20 +20,26 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.center = view.center
-        activityIndicator.startAnimating()
-        playersTable.delegate = self
-        playersTable.dataSource = self
-        teamName.text = team?.name
-        teamImg.kf.setImage(with: URL(string:team?.image ?? ""))
-        viewModel = TeamDetailsViewModelDependancyFactory.viewModel(sportName: league?.sport ?? "", teamId: String(team?.teamKey ?? 0))
-        viewModel?.refrishTeamDetails = {
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.isHidden = true
-            self.playersTable.reloadData()
+        if Network.reachability.isConnectedToNetwork == true{
+            activityIndicator = UIActivityIndicatorView(style: .large)
+            activityIndicator.center = view.center
+            activityIndicator.startAnimating()
+            playersTable.delegate = self
+            playersTable.dataSource = self
+            teamName.text = team?.name
+            teamImg.kf.setImage(with: URL(string:team?.image ?? ""))
+            viewModel = TeamDetailsViewModelDependancyFactory.viewModel(sportName: league?.sport ?? "", teamId: String(team?.teamKey ?? 0))
+            viewModel?.refrishTeamDetails = {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                self.playersTable.reloadData()
+            }
+            viewModel?.fetchTeam()
+        }else{
+            Alerts().showAlert(msg: "Opps !! Lost Connection ",complitionHandeler: {
+                self.dismiss(animated: true)
+            })
         }
-        viewModel?.fetchTeam()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(league?.sport == "football")
