@@ -183,8 +183,8 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
             
             if league?.sport == "football"{
                 let event = viewModel?.events?.footLatestEvents?[indexPath.row]
-                cell.homeTeamLabel.text = event?.eventHomeTeam ?? ""
-                cell.awayTeamLabel.text = event?.eventAwayTeam ?? ""
+                cell.homeTeamLabel.text = event?.eventAwayTeam ?? ""
+                cell.awayTeamLabel.text = event?.eventHomeTeam ?? ""
                 
                 let urlHome = URL(string: (event?.homeTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 cell.homeTeamImageView.kf.setImage(with: urlHome)

@@ -30,8 +30,8 @@ class UpComingCollectionViewCell: UICollectionViewCell {
         
         self.layer.cornerRadius = 25
         
-        homeTeamLabel.text = homeTitle
-        awayTeamLabel.text = awayTitle
+        homeTeamLabel.text = awayTitle
+        awayTeamLabel.text = homeTitle
         eventDateLabel.text = eventDate
         eventTimeLabel.text = eventTime
         let urlHome = URL(string: homeLogo)
