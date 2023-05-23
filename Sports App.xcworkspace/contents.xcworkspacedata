@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:LeagueDetailsViewModelTests.swift">
+   </FileRef>
+   <FileRef
       location = "group:Sports App.xcodeproj">
    </FileRef>
    <FileRef

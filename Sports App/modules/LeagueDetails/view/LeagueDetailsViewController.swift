@@ -30,6 +30,12 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
             activityIndicator.startAnimating()
             view.addSubview(activityIndicator)
             viewModel = LeagueDetailsDependancyFactory.viewModel(league: self.league!)
+            viewModel?.upcomingEventsReached = {
+                self.viewModel?.fetchLatestEvents()
+            }
+            viewModel?.latestEventsReached = {
+                self.viewModel?.prepareTeams()
+            }
             viewModel?.refrishUserInterface = {
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
@@ -37,13 +43,13 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
                 self.latestResultsCell.reloadData()
                 self.teamsCell.reloadData()
             }
+            viewModel?.fetchUpcomingEvents()
             viewModel?.isItFavorite = { it in
                 self.isFavorite = it
                 self.refrishFavorite()
             }
             viewModel?.isFavorite()
-            viewModel?.prepareLeageDetails()
-            
+           
             teamsCell.dataSource = self
             teamsCell.delegate = self
             upComingCell.delegate = self
@@ -94,21 +100,21 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
         }
         // number of items for upComing Event
         if collectionView == upComingCell {
-            if league?.sport == "football"{
+            if league?.sport == Constants.football{
                 return viewModel?.events?.footUpComingEvents?.count ?? 0
-            }else if league?.sport == "basketball"{
+            }else if league?.sport == Constants.basketball{
                 return viewModel?.events?.basketUpcomingEvents?.count ?? 0
-            }else if league?.sport == "cricket"{
+            }else if league?.sport == Constants.cricket{
                 return viewModel?.events?.cricketUpcomingEvents?.count ?? 0
             }else{
                 return viewModel?.events?.tennisUpcomingEvents?.count ?? 0
             }
         }
-        if league?.sport == "football"{
+        if league?.sport == Constants.football{
             return viewModel?.events?.footLatestEvents?.count ?? 0
-        }else if league?.sport == "basketball"{
+        }else if league?.sport == Constants.basketball{
             return viewModel?.events?.basketLatestEvents?.count ?? 0
-        }else if league?.sport == "cricket"{
+        }else if league?.sport == Constants.cricket{
             return viewModel?.events?.cricketLatestEvents?.count ?? 0
         }
         return viewModel?.events?.tennisLatestEvents?.count ?? 0
@@ -140,7 +146,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upComing", for: indexPath) as! UpComingCollectionViewCell
             cell.layer.borderColor = UIColor.darkGray.cgColor
             cell.layer.borderWidth = 0.5
-            if (league?.sport == "football"){
+            if (league?.sport == Constants.football){
                 let event = viewModel?.events?.footUpComingEvents?[indexPath.row]
                               
                 let urlHome = URL(string: (event?.homeTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
@@ -149,14 +155,14 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
                 cell.homeTeamImageView.kf.setImage(with: urlHome)
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
                 
-            }else if league?.sport == "basketball"{
+            }else if league?.sport == Constants.basketball{
                 let event = viewModel?.events?.basketUpcomingEvents?[indexPath.row]
                 let urlHome = URL(string: (event?.eventHomeTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 let urlAway = URL(string: (event?.eventAwayTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 cell.configureCell(homeTitle:event?.eventHomeTeam ?? "", awayTitle: event?.eventAwayTeam ?? "", eventDate: event?.eventDate ?? "" , homeLogo: event?.eventHomeTeamLogo ?? "", awaylogo: event?.eventAwayTeamLogo ?? "", eventTime:event?.eventTime ?? "")
                 cell.homeTeamImageView.kf.setImage(with: urlHome)
                 cell.awayTeamImageView.kf.setImage(with: urlAway)
-            }else if league?.sport == "cricket"{
+            }else if league?.sport == Constants.cricket{
                 let event = viewModel?.events?.cricketUpcomingEvents?[indexPath.row]
                 let urlHome = URL(string: (event?.eventHomeTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
                 let urlAway = URL(string: (event?.eventAwayTeamLogo) ?? "https://goplexe.org/wp-content/uploads/2020/04/placeholder-1.png")
@@ -181,7 +187,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
             cell.layer.borderWidth = 0.3
             cell.clipsToBounds = true
             
-            if league?.sport == "football"{
+            if league?.sport == Constants.football{
                 let event = viewModel?.events?.footLatestEvents?[indexPath.row]
                 cell.homeTeamLabel.text = event?.eventAwayTeam ?? ""
                 cell.awayTeamLabel.text = event?.eventHomeTeam ?? ""
@@ -195,7 +201,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
                 cell.eventTimeLabel.text = event?.eventTime ?? ""
                 cell.eventFinalResultLabel.text = event?.eventFinalResult ?? ""
                 
-            }else if league?.sport == "basketball"{
+            }else if league?.sport == Constants.basketball{
                 let event = viewModel?.events?.basketLatestEvents?[indexPath.row]
                 cell.homeTeamLabel.text = event?.eventHomeTeam ?? ""
                 cell.awayTeamLabel.text = event?.eventAwayTeam ?? ""
@@ -209,7 +215,7 @@ class LeagueDetailsViewController: UIViewController, UICollectionViewDelegate , 
                 cell.eventTimeLabel.text = event?.eventTime ?? ""
                 cell.eventFinalResultLabel.text = event?.eventFinalResult ?? ""
                 
-            }else if league?.sport == "cricket"{
+            }else if league?.sport == Constants.cricket{
                 
                 let event = viewModel?.events?.cricketLatestEvents?[indexPath.row]
                 cell.homeTeamLabel.text = event?.eventHomeTeam ?? ""

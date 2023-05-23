@@ -42,17 +42,17 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(league?.sport == "football")
+        if(league?.sport == Constants.football)
         {
             return viewModel?.footTeam?.players?.count ?? 0
-        }else if(league?.sport == "basketball")
+        }else if(league?.sport == Constants.basketball)
         {
             return 0
-        }else if(league?.sport == "cricket")
+        }else if(league?.sport == Constants.cricket)
         {
             return 0
         }else {
-            return 1
+            return 0
         }
         
     }
@@ -65,7 +65,7 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
         cell.contentView.layer.borderWidth = 0.3
         cell.contentView.layer.cornerRadius = 20
         cell.clipsToBounds = true
-        if( league?.sport == "football")
+        if( league?.sport == Constants.football)
         {
             let player =  viewModel?.footTeam?.players?[indexPath.row]
             cell.playerName.text = player?.playerName ?? "Unknown"
@@ -80,7 +80,7 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
             }else{
                 cell.playerImg.image = UIImage(named: "soccer-player")
             }
-        }else if( league?.sport == "tennis")
+        }else if( league?.sport == Constants.tennis)
         {
             let player =  viewModel?.tennisTeam
             cell.playerName.text = player?.playerName ?? "Unknown"
@@ -92,6 +92,7 @@ class TeamDetailsViewController: UIViewController, UITableViewDataSource,UITable
             }else{
                 cell.playerImg.image = UIImage(named: "soccer-player")
             }
+            
         }
         
         return cell

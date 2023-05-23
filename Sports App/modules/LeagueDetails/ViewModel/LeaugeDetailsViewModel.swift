@@ -28,6 +28,8 @@ class LeaugeDetailsViewModel{
     var teams:Array<Team>?
     var events:Events?
     var refrishUserInterface :()->()={}
+    var upcomingEventsReached :()->()={}
+    var latestEventsReached :()->()={}
     var isItFavorite :(Bool)->() = {_ in }
     private var footNetworkManager:PFootballNetworkManager?
     private var basketNetworkManager:PBasketballNetworkManager?
@@ -46,67 +48,64 @@ class LeaugeDetailsViewModel{
         events = Events()
     }
     
-    func prepareLeageDetails(){
-       fetchUpcomingEvents()
-    }
-    private func fetchUpcomingEvents(){
-        if(league.sport == "football"){
+    func fetchUpcomingEvents(){
+        if(league.sport == Constants.football){
             events?.footUpComingEvents = []
             footNetworkManager?.fetchEvents( mode: 0,leagueId: league.id!, complition: { it in
                 self.events?.footUpComingEvents = it?.result
-               
-                self.fetchLatestEvents()
+                self.upcomingEventsReached()
             })
-        }else if( league.sport == "basketball"){
+        }else if( league.sport == Constants.basketball){
             events?.basketUpcomingEvents = []
             basketNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
                 self.events?.basketUpcomingEvents = it?.result
-                self.fetchLatestEvents()
+                self.upcomingEventsReached()
+                print("aaaaaaaaaa...............upcoming reached.................aaaaaaa")
             })
-        }else if(league.sport == "cricket"){
+        }else if(league.sport == Constants.cricket){
             events?.cricketUpcomingEvents = []
             cricketNetworkManager?.fetchEvents(mode: 0,leagueId: league.id!, complition: { it in
                 self.events?.cricketUpcomingEvents = it?.result
-                self.fetchLatestEvents()
+                self.upcomingEventsReached()
             })
-        }else if (league.sport == "tennis"){
+        }else if (league.sport == Constants.tennis){
             events?.tennisUpcomingEvents = []
             tennisNetworkManager?.fetchEvents(mode: 0, leagueId: league.id!, complition: { it in
                 self.events?.tennisUpcomingEvents = it?.result
-                self.fetchLatestEvents()
+                self.upcomingEventsReached()
             })
         }
     }
-    private func fetchLatestEvents(){
-        if(league.sport == "football"){
+     func fetchLatestEvents(){
+         if(league.sport == Constants.football){
             events?.footLatestEvents = []
             footNetworkManager?.fetchEvents(mode:1, leagueId: league.id!, complition: { it in
                 self.events?.footLatestEvents = it?.result
-                self.prepareTeams()
+                self.latestEventsReached()
             })
-        }else if( league.sport == "basketball"){
+         }else if( league.sport == Constants.basketball){
             events?.basketLatestEvents = []
             basketNetworkManager?.fetchEvents(mode:1,leagueId: league.id!, complition: { it in
                 self.events?.basketLatestEvents = it?.result
-                self.prepareTeams()
+                self.latestEventsReached()
             })
-        }else if(league.sport == "cricket"){
+         }else if(league.sport == Constants.cricket){
             events?.cricketLatestEvents = []
             cricketNetworkManager?.fetchEvents(mode:1,leagueId: league.id!, complition: { it in
                 self.events?.cricketLatestEvents = it?.result
-                self.prepareTeams()
+                self.latestEventsReached()
             })
-        }else if (league.sport == "tennis"){
+         }else if (league.sport == Constants.tennis){
             events?.tennisLatestEvents = []
             tennisNetworkManager?.fetchEvents(mode:1,leagueId: league.id!, complition: { it in
                 self.events?.tennisLatestEvents = it?.result
-                self.prepareTeams()
+                self.latestEventsReached()
             })
         }
     }
-    private func prepareTeams(){
+     func prepareTeams(){
         
-        if(league.sport == "football"){
+        if(league.sport == Constants.football){
             var footTeams = Set<Team>()
             events?.footUpComingEvents?.forEach({it in
                 footTeams.insert(Team(name: it.eventAwayTeam,image: it.awayTeamLogo,teamKey: it.awayTeamKey))
@@ -117,7 +116,7 @@ class LeaugeDetailsViewModel{
                 footTeams.insert(Team(name: it.eventHomeTeam,image: it.homeTeamLogo,teamKey:it.homeTeamKey))
             })
             teams = Array(footTeams)
-        }else if( league.sport == "basketball"){
+        }else if( league.sport == Constants.basketball){
             var basketTeams = Set<Team>()
             events?.basketUpcomingEvents?.forEach({it in
                 basketTeams.insert(Team(name: it.eventAwayTeam,image: it.eventAwayTeamLogo,teamKey: it.awayTeamKey))
@@ -128,7 +127,7 @@ class LeaugeDetailsViewModel{
                 basketTeams.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo,teamKey: it.homeTeamKey))
             })
             teams  = Array(basketTeams)
-        }else if(league.sport == "cricket"){
+        }else if(league.sport == Constants.cricket){
             var cricketTeams = Set<Team>()
             events?.cricketUpcomingEvents?.forEach({it in
                 cricketTeams.insert(Team(name: it.eventAwayTeam, image: it.eventAwayTeamLogo,teamKey: it.awayTeamKey))
@@ -139,7 +138,7 @@ class LeaugeDetailsViewModel{
                 cricketTeams.insert(Team(name: it.eventHomeTeam,image: it.eventHomeTeamLogo, teamKey: it.homeTeamKey))
             })
             teams = Array(cricketTeams)
-        }else if (league.sport == "tennis"){
+        }else if (league.sport == Constants.tennis){
             var tennisTeams = Set<Team>()
             events?.tennisUpcomingEvents?.forEach({it in
                 tennisTeams.insert(Team(name: it.eventFirstPlayer,image: it.eventFirstPlayerLogo, teamKey: it.firstPlayerKey))

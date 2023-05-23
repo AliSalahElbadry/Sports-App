@@ -25,19 +25,19 @@ class LeaguesViewModel{
     }
     func getLeagues(){
         leagues = []
-        if(sportName == "football"){
+        if(sportName == Constants.football){
             footNetworkManager?.fetchLeagues(complition: { it in
                 self.map_football_to_leages(res: it )
             })
-        }else if( sportName == "basketball"){
+        }else if( sportName == Constants.basketball){
             basketNetworkManager?.fetchLeagues(complition: { it in
                 self.map_basket_to_leages(res: it)
             })
-        }else if(sportName == "cricket"){
+        }else if(sportName == Constants.cricket){
             cricketNetworkManager?.fetchLeagues(complition: { it in
                 self.map_cricket_to_leages(res: it)
             })
-        }else if (sportName == "tennis"){
+        }else if (sportName == Constants.tennis){
             tennisNetworkManager?.fetchLeagues(complition: { it in
                self.map_tennis_to_leages(res: it ?? nil)
             })
@@ -52,7 +52,7 @@ class LeaguesViewModel{
             l.id = String(it.leagueKey)
             l.name = it.leagueName
             l.image = it.leagueLogo
-            l.sport = "football"
+            l.sport = Constants.football
             l.url = it.leagueName
             arr.append(l)
         })
@@ -67,7 +67,7 @@ class LeaguesViewModel{
             l.id = String(it.leagueKey)
             l.name = it.leagueName
             l.image = "https://img.freepik.com/premium-vector/vector-basketball-league-logo-with-ball-sport-badge-tournament-championship-league_175838-2917.jpg"
-            l.sport = "football"
+            l.sport = Constants.basketball
             l.url = it.leagueName
             arr.append(l)
         })
@@ -82,7 +82,7 @@ class LeaguesViewModel{
             l.id = String(it.leagueKey)
             l.name = it.leagueName
             l.image = "https://png.pngtree.com/png-clipart/20230226/ourmid/pngtree-cricket-league-logo-png-image_6619719.png"
-            l.sport = "football"
+            l.sport = Constants.cricket
             l.url = it.leagueName
             arr.append(l)
         })
@@ -97,7 +97,7 @@ class LeaguesViewModel{
             l.id = String(it.leagueKey)
             l.name = it.leagueName
             l.image = "https://i0.wp.com/indiantennisdaily.com/wp-content/uploads/2022/11/301967932_509211634540389_3621829506550752633_n.jpg"
-            l.sport = "football"
+            l.sport = Constants.tennis
             l.url = it.leagueName
             arr.append(l)
         })

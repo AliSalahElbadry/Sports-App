@@ -61,17 +61,17 @@ class SportsViewController: UIViewController,UICollectionViewDelegate,UICollecti
             leaugesPage.modalPresentationStyle = .fullScreen
             switch (indexPath.row){
             case 0 :
-                leaugesPage.sportName="football"
+                leaugesPage.sportName=Constants.football
                 
                 break
             case 1:
-                leaugesPage.sportName="basketball"
+                leaugesPage.sportName=Constants.basketball
                 break
             case 2:
-                leaugesPage.sportName="cricket"
+                leaugesPage.sportName=Constants.cricket
                 break
             default :
-                leaugesPage.sportName="tennis"
+                leaugesPage.sportName=Constants.tennis
                 break
             }
             self.present(leaugesPage, animated: true)
