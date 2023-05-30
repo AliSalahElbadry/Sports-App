@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		042ABA7C2A1C9D4C0042F24E /* FakeSportsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042ABA7B2A1C9D4C0042F24E /* FakeSportsNetworkManager.swift */; };
-		042ABA7E2A1CA39F0042F24E /* FakeResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042ABA7D2A1CA39F0042F24E /* FakeResponses.swift */; };
+		042ABA7C2A1C9D4C0042F24E /* FakeCricketNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042ABA7B2A1C9D4C0042F24E /* FakeCricketNetworkManager.swift */; };
 		042EE2242A1C211C0078D3D8 /* FootballNetworkManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EE2232A1C211C0078D3D8 /* FootballNetworkManagerTest.swift */; };
 		042EE2262A1C24210078D3D8 /* BasketBallNetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EE2252A1C24210078D3D8 /* BasketBallNetworkManagerTests.swift */; };
 		042EE2282A1C27540078D3D8 /* CricketNetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042EE2272A1C27530078D3D8 /* CricketNetworkManagerTests.swift */; };
@@ -66,6 +65,10 @@
 		04D8F8CE2A15344400E46036 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D8F8CD2A15344400E46036 /* Constants.swift */; };
 		04D8F8D02A153BBE00E46036 /* SportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D8F8CF2A153BBE00E46036 /* SportsViewController.swift */; };
 		04D8F8D22A153BE000E46036 /* SportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D8F8D12A153BE000E46036 /* SportCollectionViewCell.swift */; };
+		04F1D4DC2A262CCF0007D0DB /* LeaguesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1D4DB2A262CCF0007D0DB /* LeaguesViewModelTests.swift */; };
+		04F1D4DE2A262DBC0007D0DB /* FakeFootballNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1D4DD2A262DBC0007D0DB /* FakeFootballNetworkManager.swift */; };
+		04F1D4E02A262F010007D0DB /* FakeTennisNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1D4DF2A262F010007D0DB /* FakeTennisNetworkManager.swift */; };
+		04F1D4E22A2631510007D0DB /* FakeBasketNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F1D4E12A2631510007D0DB /* FakeBasketNetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,8 +96,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		042ABA7B2A1C9D4C0042F24E /* FakeSportsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSportsNetworkManager.swift; sourceTree = "<group>"; };
-		042ABA7D2A1CA39F0042F24E /* FakeResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponses.swift; sourceTree = "<group>"; };
+		042ABA7B2A1C9D4C0042F24E /* FakeCricketNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCricketNetworkManager.swift; sourceTree = "<group>"; };
 		042EE21A2A1C20830078D3D8 /* Sports AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sports AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		042EE2232A1C211C0078D3D8 /* FootballNetworkManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FootballNetworkManagerTest.swift; sourceTree = "<group>"; };
 		042EE2252A1C24210078D3D8 /* BasketBallNetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketBallNetworkManagerTests.swift; sourceTree = "<group>"; };
@@ -153,6 +155,10 @@
 		04D8F8CD2A15344400E46036 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		04D8F8CF2A153BBE00E46036 /* SportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsViewController.swift; sourceTree = "<group>"; };
 		04D8F8D12A153BE000E46036 /* SportCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportCollectionViewCell.swift; sourceTree = "<group>"; };
+		04F1D4DB2A262CCF0007D0DB /* LeaguesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LeaguesViewModelTests.swift; path = "Sports AppTests/LeaguesViewModelTests.swift"; sourceTree = SOURCE_ROOT; };
+		04F1D4DD2A262DBC0007D0DB /* FakeFootballNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeFootballNetworkManager.swift; sourceTree = "<group>"; };
+		04F1D4DF2A262F010007D0DB /* FakeTennisNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTennisNetworkManager.swift; sourceTree = "<group>"; };
+		04F1D4E12A2631510007D0DB /* FakeBasketNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBasketNetworkManager.swift; sourceTree = "<group>"; };
 		17E3C39019F7CCD4E9D5941E /* Pods-Sports App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sports App.release.xcconfig"; path = "Target Support Files/Pods-Sports App/Pods-Sports App.release.xcconfig"; sourceTree = "<group>"; };
 		1EFCCF35AC95B20097578D36 /* Pods_Sports_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sports_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C1C4FFA5FB04EA48CC4763 /* Pods-Sports App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sports App.debug.xcconfig"; path = "Target Support Files/Pods-Sports App/Pods-Sports App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -180,6 +186,7 @@
 		04096C022A1D38E8005DB996 /* network_test */ = {
 			isa = PBXGroup;
 			children = (
+				04F1D4DB2A262CCF0007D0DB /* LeaguesViewModelTests.swift */,
 				042EE2292A1C296F0078D3D8 /* TennisNetworkManagerTests.swift */,
 				042EE2272A1C27530078D3D8 /* CricketNetworkManagerTests.swift */,
 				042EE2252A1C24210078D3D8 /* BasketBallNetworkManagerTests.swift */,
@@ -191,8 +198,10 @@
 		04096C032A1D3907005DB996 /* fake_network */ = {
 			isa = PBXGroup;
 			children = (
-				042ABA7D2A1CA39F0042F24E /* FakeResponses.swift */,
-				042ABA7B2A1C9D4C0042F24E /* FakeSportsNetworkManager.swift */,
+				042ABA7B2A1C9D4C0042F24E /* FakeCricketNetworkManager.swift */,
+				04F1D4DD2A262DBC0007D0DB /* FakeFootballNetworkManager.swift */,
+				04F1D4DF2A262F010007D0DB /* FakeTennisNetworkManager.swift */,
+				04F1D4E12A2631510007D0DB /* FakeBasketNetworkManager.swift */,
 			);
 			path = fake_network;
 			sourceTree = "<group>";
@@ -689,12 +698,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				042ABA7C2A1C9D4C0042F24E /* FakeSportsNetworkManager.swift in Sources */,
+				042ABA7C2A1C9D4C0042F24E /* FakeCricketNetworkManager.swift in Sources */,
+				04F1D4E02A262F010007D0DB /* FakeTennisNetworkManager.swift in Sources */,
 				042EE2282A1C27540078D3D8 /* CricketNetworkManagerTests.swift in Sources */,
 				042EE2262A1C24210078D3D8 /* BasketBallNetworkManagerTests.swift in Sources */,
-				042ABA7E2A1CA39F0042F24E /* FakeResponses.swift in Sources */,
+				04F1D4DC2A262CCF0007D0DB /* LeaguesViewModelTests.swift in Sources */,
+				04F1D4DE2A262DBC0007D0DB /* FakeFootballNetworkManager.swift in Sources */,
 				042EE2242A1C211C0078D3D8 /* FootballNetworkManagerTest.swift in Sources */,
 				042EE22A2A1C296F0078D3D8 /* TennisNetworkManagerTests.swift in Sources */,
+				04F1D4E22A2631510007D0DB /* FakeBasketNetworkManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

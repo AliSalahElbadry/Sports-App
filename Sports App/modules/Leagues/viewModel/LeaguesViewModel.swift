@@ -13,7 +13,7 @@ class LeaguesViewModel{
    private var basketNetworkManager:PBasketballNetworkManager?
    private var cricketNetworkManager:PCricketNetworkManager?
    private var tennisNetworkManager:PTennisNetworkManager?
-   private  let sportName:String
+     var sportName:String
     var showLeagues:()->()={}
     init( footNetworkManager: PFootballNetworkManager? = nil, basketNetworkManager: PBasketballNetworkManager? = nil, cricketNetworkManager: PCricketNetworkManager? = nil, tennisNetworkManager: PTennisNetworkManager? = nil, sportName: String) {
         self.leagues = []
