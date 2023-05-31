@@ -17,6 +17,8 @@
  * CoreData
  * Alamofire
  * Lottie Animations 
+ * KingFisher
+ * Rechability
  * UIKit
  * Unit Testing
 
